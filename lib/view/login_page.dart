@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vitality/components/app_bar_login.dart';
 import 'package:vitality/components/color.dart';
 import 'package:vitality/components/fonts.dart';
 import 'package:vitality/components/text_field.dart';
-import 'package:vitality/view/question_page.dart';
+import 'package:vitality/view/nav_bar.dart';
 import 'package:vitality/view/signup_page.dart';
 import 'package:vitality/widgets/primary_button.dart';
 
 class LoginScreen extends StatefulWidget {
-  final int? typeId;
+  final int typeId;
   const LoginScreen({Key? key,required this.typeId}) : super(key: key);
 
   @override
@@ -56,7 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           prefixIcon: const Icon(Icons.email,color: Colors.black,),
                           controller: email,
                           inputType: TextInputType.emailAddress,
-                          suffixIconButton: null, ob: false, type: "email"),
+                          suffixIconButton: null,
+                          ob: false,
+                          type: "email"),
                       const SizedBox(height: 20,),
                       TextFieldWidget(hintText: "Password..",
                           prefixIcon: const Icon(Icons.lock,color: Colors.black,),
@@ -79,14 +82,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ob: ob, type: "pass"),
                       const SizedBox(height: 40,),
                       InkWell(
-                        onTap: (){
-                          if(widget.typeId == 1){
-                            Get.to(const QuestionPage());
-                          }else if(widget.typeId == 2){
-                            // Get.to(const QuestionPage());
-                          }else if(widget.typeId == 3){
-                            // Get.to(const QuestionPage());
-                          }
+                        onTap: () async {
+                          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                          sharedPreferences.setInt('typeID', widget.typeId);
+                          int? typeId = sharedPreferences.getInt('typeID');
+                          print(typeId);
+                          Get.to(NavBar(typeId: widget.typeId,));
                         },
                         child: PrimaryButton(title: "Login",
                             width: width*0.8,

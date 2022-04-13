@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vitality/components/app_bar_login.dart';
-import 'package:vitality/components/color.dart';
 import 'package:vitality/components/fonts.dart';
 import 'package:vitality/components/main_app_bar.dart';
-import 'package:vitality/widgets/primary_button.dart';
-
 import 'meal_details_card.dart';
 
 class MealsDetails extends StatefulWidget {
@@ -64,7 +60,7 @@ class _MealsDetailsState extends State<MealsDetails> {
                           AspectRatio(
                             aspectRatio: 1,
                             child: Image.asset(
-                              "assets/images/logo.jpeg",
+                              widget.imagePath!,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -72,7 +68,7 @@ class _MealsDetailsState extends State<MealsDetails> {
                               child: Container(
                                 padding: const EdgeInsets.all(5),
                                 color: Colors.white54,
-                                child: Text("Name of center",style: AppFonts.tajawal14BlueW600,textAlign: TextAlign.center,),
+                                child: Text("Name of Product",style: AppFonts.tajawal14BlueW600,textAlign: TextAlign.center,),
                               )
                           ),
                         ],

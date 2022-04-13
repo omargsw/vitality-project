@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vitality/components/app_bar_login.dart';
 import 'package:vitality/components/color.dart';
 import 'package:vitality/components/fonts.dart';
 import 'package:vitality/components/text_field.dart';
+import 'package:vitality/view/question_page.dart';
 import 'package:vitality/widgets/primary_button.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -167,10 +169,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         inputType: TextInputType.visiblePassword,
                       ),
                       const SizedBox(height: 40,),
-                      PrimaryButton(title: "SignUp",
-                          width: width*0.8,
-                          backgroundcolor: AppColors.secondaryColor,
-                          height: 50),
+                      InkWell(
+                        onTap: () => Get.to(const QuestionPage()),
+                        child: PrimaryButton(title: "SignUp",
+                            width: width*0.8,
+                            backgroundcolor: AppColors.secondaryColor,
+                            height: 50),
+                      ),
                       const SizedBox(height: 20,),
 
                     ],

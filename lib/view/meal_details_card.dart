@@ -45,33 +45,13 @@ class _MealDetailsCardState extends State<MealDetailsCard> {
                   ],
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Name",style: AppFonts.tajawal20BlueW600,),
+                    Text(
+                      "asdasd asdklasd asdjhasdkj asjdhasjkd asdasd asd asd asdasd asd ",
+                      style: AppFonts.tajawal20WhiteW600,
+                      textAlign: TextAlign.center,
                     ),
-                    Text("Name",style: AppFonts.tajawal16WhiteW600,),
-                    const Divider(
-                      color: Colors.black54,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Phone Number",style: AppFonts.tajawal20BlueW600,),
-                    ),
-                    Text("phone",style: AppFonts.tajawal16WhiteW600,),
-                    const Divider(
-                      color: Colors.black54,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Email Address",style: AppFonts.tajawal20BlueW600,),
-                    ),
-                    Text("email",style: AppFonts.tajawal16WhiteW600,),
-                    const SizedBox(height: 20,),
                   ],
                 )
             ),

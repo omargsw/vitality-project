@@ -5,16 +5,17 @@ import 'package:vitality/components/fonts.dart';
 import 'package:vitality/components/meals_card.dart';
 import 'package:vitality/view/adminViews/add_news.dart';
 import 'package:vitality/view/adminViews/admin_meals_details.dart';
+import 'package:vitality/view/centerViews/food_plan.dart';
 import 'package:vitality/view/meals_details.dart';
 
-class AdminCategories extends StatefulWidget {
-  const AdminCategories({Key? key}) : super(key: key);
+class CenterCategories extends StatefulWidget {
+  const CenterCategories({Key? key}) : super(key: key);
 
   @override
-  State<AdminCategories> createState() => _AdminCategoriesState();
+  State<CenterCategories> createState() => _CenterCategoriesState();
 }
 
-class _AdminCategoriesState extends State<AdminCategories> {
+class _CenterCategoriesState extends State<CenterCategories> {
   List title = [
     "Breakfast",
     "Lunch",
@@ -29,15 +30,6 @@ class _AdminCategoriesState extends State<AdminCategories> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.secondaryColor,
-        foregroundColor: Colors.white,
-        onPressed: () {
-          Get.to(const Addnews(title: "Add Categories",isName: false,));
-
-        },
-        child: const Icon(Icons.add,size: 30,),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -52,6 +44,7 @@ class _AdminCategoriesState extends State<AdminCategories> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
+                    Get.to(const CenterFoodPlan(title: "title",imagePath: 'assets/images/breakfast.jpg',));
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),

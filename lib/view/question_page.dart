@@ -58,7 +58,7 @@ class _QuestionPageState extends State<QuestionPage> {
           Spacer(),
           Center(
             child: InkWell(
-              onTap: () => Get.to(const NavBar()),
+              onTap: () => Get.to(const NavBar(typeId: 1,)),
               child: PrimaryButton(title: "Continue",
                   width: width*0.8,
                   backgroundcolor: AppColors.secondaryColor

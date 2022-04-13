@@ -56,8 +56,6 @@ class MealsCard extends StatelessWidget {
                                       title!,
                                       style: AppFonts.tajawal20BlueW600
                                   ),
-
-
                                 ],
                               ),
                             ),

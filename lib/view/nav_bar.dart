@@ -1,23 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:vitality/components/app_bar_login.dart';
 import 'package:vitality/components/color.dart';
 import 'package:vitality/components/fonts.dart';
+import 'package:vitality/main.dart';
+import 'package:vitality/view/adminViews/admin_categories.dart';
+import 'package:vitality/view/adminViews/admin_news.dart';
+import 'package:vitality/view/adminViews/admin_reservations.dart';
+import 'package:vitality/view/adminViews/admin_users.dart';
+import 'package:vitality/view/centerViews/canter_profile_screen.dart';
+import 'package:vitality/view/centerViews/center_categories.dart';
+import 'package:vitality/view/centerViews/food_plan.dart';
+import 'package:vitality/view/centerViews/reservations_department.dart';
 import 'package:vitality/view/centers_page.dart';
 import 'package:vitality/view/home_page.dart';
 import 'package:vitality/view/profile_screen.dart';
 import 'package:vitality/view/reservations_list.dart';
-import 'package:vitality/widgets/drawer.dart';
+import 'package:vitality/view/splash_screen.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({Key? key}) : super(key: key);
+  final int? typeId;
+  const NavBar({Key? key,required this.typeId}) : super(key: key);
 
   @override
   _NavBarState createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
+
   int _currentIndex = 0;
+  int _currentIndexCenter = 0;
+  int _currentIndexAdmin = 0;
 
   @override
   void initState() {
@@ -32,14 +45,34 @@ class _NavBarState extends State<NavBar> {
       const HomePage(),
       const CentersPage(),
       const ReservationsList(),
-      ProfileScreen(),
-      // AddPost(),
+      const ProfileScreen(),
+    ];
+    final List<Widget> _pagesCenter = <Widget>[
+      const ReservationsDepartment(),
+      const CenterCategories(),
+      const CenterProfileScreen(),
+    ];
+    final List<Widget> _pagesAdmin = <Widget>[
+      const AdminCategories(),
+      const AdminUsers(),
+      const AdminNews(),
+      const AdminReservations(),
     ];
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     void _onItemTapped(int index) {
       setState(() {
         _currentIndex = index;
+      });
+    }
+    void _onItemTappedCenter(int index) {
+      setState(() {
+        _currentIndexCenter = index;
+      });
+    }
+    void _onItemTappedAdmin(int index) {
+      setState(() {
+        _currentIndexAdmin = index;
       });
     }
 
@@ -62,11 +95,14 @@ class _NavBarState extends State<NavBar> {
           style: AppFonts.tajawal25GreenW600,
         ),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.logout,color: Colors.black,))
+          IconButton(onPressed: (){
+            Get.offAll(SplashScreen());
+          }, icon: const Icon(Icons.logout,color: Colors.black,))
         ],
         backgroundColor: Colors.white,
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: widget.typeId == 1 ?
+      BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
         currentIndex: _currentIndex,
         backgroundColor: colorScheme.surface,
@@ -93,10 +129,67 @@ class _NavBarState extends State<NavBar> {
             icon: Icon(Icons.person),
           ),
         ],
+      ) :
+      widget.typeId == 2 ?
+      BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
+        currentIndex: _currentIndexCenter,
+        backgroundColor: colorScheme.surface,
+        selectedItemColor: AppColors.secondaryColor,
+        unselectedItemColor: colorScheme.onSurface.withOpacity(.30),
+        selectedLabelStyle: textTheme.caption,
+        unselectedLabelStyle: textTheme.caption,
+        onTap: _onItemTappedCenter,
+        items: const [
+          BottomNavigationBarItem(
+            label: 'Reservations',
+            icon: Icon(Icons.list_alt),
+          ),
+          BottomNavigationBarItem(
+            label: 'Food Plan',
+            icon: Icon(Icons.fastfood),
+          ),
+          BottomNavigationBarItem(
+            label: 'Profile',
+            icon: Icon(Icons.person),
+          ),
+        ],
+      ) :
+      BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
+        currentIndex: _currentIndexAdmin,
+        backgroundColor: colorScheme.surface,
+        selectedItemColor: AppColors.secondaryColor,
+        unselectedItemColor: colorScheme.onSurface.withOpacity(.30),
+        selectedLabelStyle: textTheme.caption,
+        unselectedLabelStyle: textTheme.caption,
+        onTap: _onItemTappedAdmin,
+        items: const [
+          BottomNavigationBarItem(
+            label: 'Categories',
+            icon: Icon(Icons.category),
+          ),
+          BottomNavigationBarItem(
+            label: 'Users',
+            icon: Icon(Icons.supervisor_account),
+          ),
+          BottomNavigationBarItem(
+            label: 'News',
+            icon: Icon(Icons.newspaper),
+          ),
+          BottomNavigationBarItem(
+            label: 'Reservations',
+            icon: Icon(Icons.list_alt),
+          ),
+        ],
       ),
       // drawer: const NavDrawer(),
       body: Center(
-        child: _pages.elementAt(_currentIndex),
+        child: widget.typeId == 1 ?
+        _pages.elementAt(_currentIndex) :
+            widget.typeId == 2 ?
+            _pagesCenter.elementAt(_currentIndexCenter) :
+            _pagesAdmin.elementAt(_currentIndexAdmin)
       )
     );
   }

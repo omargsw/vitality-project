@@ -1,22 +1,21 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:vitality/components/color.dart';
 import 'package:vitality/components/text_field.dart';
 import 'package:vitality/widgets/primary_button.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  GlobalKey<FormState> _form= GlobalKey<FormState>();
-  GlobalKey<FormState> _form2= GlobalKey<FormState>();
-  GlobalKey<FormState> _form3= GlobalKey<FormState>();
-  GlobalKey<FormState> _form4= GlobalKey<FormState>();
+
+  GlobalKey<FormState> form= GlobalKey<FormState>();
   var name=TextEditingController();
   var phone=TextEditingController();
   var email=TextEditingController();
@@ -31,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   bool _load = false;
   File ? imageFile;
-  // final imagePicker = ImagePicker();
+  final imagePicker = ImagePicker();
   String status = '';
   String photo = '';
   String imagepath = '';
@@ -59,19 +58,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  // Future chooseImage(ImageSource source) async {
-  //   final pickedFile = await imagePicker.pickImage(source: source);
-  //   setState(() {
-  //     imageFile = File(pickedFile!.path);
-  //     _load = false;
-  //   });
-  // }
-  //
-  // setStatus(String message) {
-  //   setState(() {
-  //     status = message;
-  //   });
-  // }
+  Future chooseImage(ImageSource source) async {
+    final pickedFile = await imagePicker.pickImage(source: source);
+    setState(() {
+      imageFile = File(pickedFile!.path);
+      _load = false;
+    });
+  }
+
+  setStatus(String message) {
+    setState(() {
+      status = message;
+    });
+  }
 
 
   // Widget bottomSheet() {
@@ -111,7 +110,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // typeId = sharedPreferences!.getInt('typeID');
+    // print(typeId);
     super.initState();
     
   }
@@ -283,7 +283,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Form(
-                        key: _form,
+                        key: form,
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
@@ -358,10 +358,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 inputType: TextInputType.visiblePassword,
                               ),
                               const SizedBox(height: 40,),
-                              PrimaryButton(title: "SAVE",
-                                  width: width * 0.7,
-                                  backgroundcolor: AppColors.secondaryColor,
-                                  height: 40,
+                              InkWell(
+                                onTap: (){
+                                },
+                                child: PrimaryButton(title: "SAVE",
+                                    width: width * 0.7,
+                                    backgroundcolor: AppColors.secondaryColor,
+                                    height: 40,
+                                ),
                               ),
                               const SizedBox(height: 20,),
                             ],
