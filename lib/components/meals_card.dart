@@ -5,9 +5,8 @@ import 'package:vitality/components/fonts.dart';
 class MealsCard extends StatelessWidget {
   final String? title;
   final String? imagePath;
-  const MealsCard({Key? key,
-    required this.title,
-    required this.imagePath}) : super(key: key);
+  const MealsCard({Key? key, required this.title, required this.imagePath})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class MealsCard extends StatelessWidget {
                 children: <Widget>[
                   AspectRatio(
                     aspectRatio: 2,
-                    child: Image.asset(
+                    child: Image.network(
                       imagePath!,
                       fit: BoxFit.cover,
                     ),
@@ -47,15 +46,14 @@ class MealsCard extends StatelessWidget {
                         Expanded(
                           child: Container(
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 10),
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(
-                                      title!,
-                                      style: AppFonts.tajawal20BlueW600
-                                  ),
+                                  Text(title!,
+                                      style: AppFonts.tajawal20BlueW600),
                                 ],
                               ),
                             ),

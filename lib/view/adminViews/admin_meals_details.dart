@@ -9,7 +9,9 @@ import 'package:vitality/view/adminViews/admin_meal_details_card.dart';
 class MealsDetailsAdmin extends StatefulWidget {
   final String? title;
   final String? imagePath;
-  const MealsDetailsAdmin({Key? key,required this.title,required this.imagePath}) : super(key: key);
+  const MealsDetailsAdmin(
+      {Key? key, required this.title, required this.imagePath})
+      : super(key: key);
 
   @override
   State<MealsDetailsAdmin> createState() => _MealsDetailsAdminState();
@@ -25,9 +27,16 @@ class _MealsDetailsAdminState extends State<MealsDetailsAdmin> {
         backgroundColor: AppColors.secondaryColor,
         foregroundColor: Colors.white,
         onPressed: () {
-          Get.to(const Addnews(title: "Add Categories",isName: true,));
+          Get.to(const Addnews(
+            title: "Add Categories",
+            isName: true,
+            type: '',
+          ));
         },
-        child: const Icon(Icons.add,size: 30,),
+        child: const Icon(
+          Icons.add,
+          size: 30,
+        ),
       ),
       body: Container(
         width: width,
@@ -46,15 +55,19 @@ class _MealsDetailsAdminState extends State<MealsDetailsAdmin> {
             ),
             itemCount: 10,
             itemBuilder: (_, index) {
-              return  GestureDetector(
+              return GestureDetector(
                 onTap: () {
-                  Get.to(const MealDetailsCardAdmin(imagePath: 'assets/images/dinner.jpg',title: "name",));
+                  Get.to(const MealDetailsCardAdmin(
+                    imagePath: 'assets/images/dinner.jpg',
+                    title: "name",
+                  ));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(16.0)),
                       boxShadow: <BoxShadow>[
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.3),
@@ -64,7 +77,8 @@ class _MealsDetailsAdminState extends State<MealsDetailsAdmin> {
                       ],
                     ),
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(16.0)),
                       child: Column(
                         children: [
                           AspectRatio(
@@ -76,20 +90,23 @@ class _MealsDetailsAdminState extends State<MealsDetailsAdmin> {
                           ),
                           Expanded(
                               child: Container(
-                                padding: const EdgeInsets.all(5),
-                                color: Colors.white54,
-                                child: Text("Name of center",style: AppFonts.tajawal14BlueW600,textAlign: TextAlign.center,),
-                              )
-                          ),
+                            padding: const EdgeInsets.all(5),
+                            color: Colors.white54,
+                            child: Text(
+                              "Name of center",
+                              style: AppFonts.tajawal14BlueW600,
+                              textAlign: TextAlign.center,
+                            ),
+                          )),
                         ],
                       ),
                     ),
-                  ),),
+                  ),
+                ),
               );
             },
           ),
         ),
-
       ),
     );
   }

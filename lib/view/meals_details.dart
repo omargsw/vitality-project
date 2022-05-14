@@ -7,7 +7,8 @@ import 'meal_details_card.dart';
 class MealsDetails extends StatefulWidget {
   final String? title;
   final String? imagePath;
-  const MealsDetails({Key? key,required this.title,required this.imagePath}) : super(key: key);
+  const MealsDetails({Key? key, required this.title, required this.imagePath})
+      : super(key: key);
 
   @override
   State<MealsDetails> createState() => _MealsDetailsState();
@@ -36,15 +37,20 @@ class _MealsDetailsState extends State<MealsDetails> {
             ),
             itemCount: 10,
             itemBuilder: (_, index) {
-              return  GestureDetector(
+              return GestureDetector(
                 onTap: () {
-                 Get.to(const MealDetailsCard(imagePath: 'assets/images/dinner.jpg',title: "text",));
+                  Get.to(const MealDetailsCard(
+                    imagePath: 'assets/images/dinner.jpg',
+                    title: "text",
+                    desc: '',
+                  ));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(16.0)),
                       boxShadow: <BoxShadow>[
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.3),
@@ -54,7 +60,8 @@ class _MealsDetailsState extends State<MealsDetails> {
                       ],
                     ),
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(16.0)),
                       child: Column(
                         children: [
                           AspectRatio(
@@ -66,20 +73,23 @@ class _MealsDetailsState extends State<MealsDetails> {
                           ),
                           Expanded(
                               child: Container(
-                                padding: const EdgeInsets.all(5),
-                                color: Colors.white54,
-                                child: Text("Name of Product",style: AppFonts.tajawal14BlueW600,textAlign: TextAlign.center,),
-                              )
-                          ),
+                            padding: const EdgeInsets.all(5),
+                            color: Colors.white54,
+                            child: Text(
+                              "Name of Product",
+                              style: AppFonts.tajawal14BlueW600,
+                              textAlign: TextAlign.center,
+                            ),
+                          )),
                         ],
                       ),
                     ),
-                  ),),
+                  ),
+                ),
               );
             },
           ),
         ),
-
       ),
     );
   }

@@ -11,17 +11,19 @@ import 'package:vitality/widgets/primary_button.dart';
 class MealDetailsCardAdmin extends StatefulWidget {
   final String? title;
   final String? imagePath;
-  const MealDetailsCardAdmin({Key? key,required this.title,required this.imagePath}) : super(key: key);
+  const MealDetailsCardAdmin(
+      {Key? key, required this.title, required this.imagePath})
+      : super(key: key);
 
   @override
   State<MealDetailsCardAdmin> createState() => _MealDetailsCardAdminState();
 }
 
 class _MealDetailsCardAdminState extends State<MealDetailsCardAdmin> {
-  GlobalKey<FormState> form= GlobalKey<FormState>();
-  var name=TextEditingController();
-  var phone=TextEditingController();
-  var email=TextEditingController();
+  GlobalKey<FormState> form = GlobalKey<FormState>();
+  var name = TextEditingController();
+  var phone = TextEditingController();
+  var email = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -61,17 +63,25 @@ class _MealDetailsCardAdminState extends State<MealDetailsCardAdmin> {
                       textAlign: TextAlign.center,
                     ),
                   ],
-                )
+                )),
+            const SizedBox(
+              height: 30,
             ),
-            const SizedBox(height: 30,),
             InkWell(
-                onTap: (){
-                  Get.to(const Addnews(title: "Edit Categories",isName: true,));
+                onTap: () {
+                  Get.to(const Addnews(
+                    title: "Edit Categories",
+                    isName: true,
+                    type: '',
+                  ));
                 },
-                child: PrimaryButton(title: "Edit", width: width * 0.5, backgroundcolor: AppColors.primaryColor, height: 50)),
+                child: PrimaryButton(
+                    title: "Edit",
+                    width: width * 0.5,
+                    backgroundcolor: AppColors.primaryColor,
+                    height: 50)),
           ],
         ),
-
       ),
     );
   }

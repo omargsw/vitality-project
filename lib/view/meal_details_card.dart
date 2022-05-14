@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:vitality/components/color.dart';
 import 'package:vitality/components/fonts.dart';
 import 'package:vitality/components/main_app_bar.dart';
-import 'package:vitality/widgets/primary_button.dart';
 
 class MealDetailsCard extends StatefulWidget {
   final String? title;
   final String? imagePath;
-  const MealDetailsCard({Key? key,required this.title,required this.imagePath}) : super(key: key);
+  final String? desc;
+  const MealDetailsCard({
+    Key? key,
+    required this.title,
+    required this.imagePath,
+    required this.desc,
+  }) : super(key: key);
 
   @override
   State<MealDetailsCard> createState() => _MealDetailsCardState();
@@ -53,11 +57,9 @@ class _MealDetailsCardState extends State<MealDetailsCard> {
                       textAlign: TextAlign.center,
                     ),
                   ],
-                )
-            ),
+                )),
           ],
         ),
-
       ),
     );
   }

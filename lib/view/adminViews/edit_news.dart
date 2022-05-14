@@ -10,29 +10,34 @@ import 'package:vitality/components/constant.dart';
 import 'package:vitality/components/main_app_bar.dart';
 import 'package:vitality/components/text_field.dart';
 import 'package:vitality/components/web_config.dart';
-import 'package:vitality/main.dart';
 import 'package:vitality/view/nav_bar.dart';
 import 'package:vitality/widgets/primary_button.dart';
 import 'package:http/http.dart' as http;
 
-class Addnews extends StatefulWidget {
+class EditNews extends StatefulWidget {
   final String? title;
-  final int? newsId;
+  final int? id;
   final bool? isName;
   final String? type;
-  const Addnews({
+  final String? image;
+  final String? titleNews;
+  final String? desc;
+  const EditNews({
     Key? key,
     required this.title,
-    this.newsId,
+    required this.id,
     required this.isName,
     required this.type,
+    required this.image,
+    required this.desc,
+    required this.titleNews,
   }) : super(key: key);
 
   @override
-  State<Addnews> createState() => _AddnewsState();
+  State<EditNews> createState() => _EditNewsState();
 }
 
-class _AddnewsState extends State<Addnews> {
+class _EditNewsState extends State<EditNews> {
   GlobalKey<FormState> form = GlobalKey<FormState>();
   TextEditingController title = TextEditingController();
   TextEditingController desc = TextEditingController();
@@ -57,66 +62,66 @@ class _AddnewsState extends State<Addnews> {
     });
   }
 
-  Future insertCategory(
-    var name,
-    var image,
-    var imagedecoded,
-  ) async {
+  Future updateCategorydesc(var catid, var name) async {
     try {
-      String url = WebConfig.baseUrl + WebConfig.adminAddCategory;
+      String url = WebConfig.baseUrl + WebConfig.adminUpdateCategory;
       final response = await http.post(Uri.parse(url), body: {
         "name": name,
-        "image": image,
-        "imagedecoded": imagedecoded,
+        "Cat_id": catid.toString(),
       });
       log(response.body);
     } catch (e) {
-      log("[insertCategory] $e");
+      log("[updateCategorydesc] $e");
     }
   }
 
-  Future insertFood(
-    var name,
-    var description,
-    var centersid,
-    var categoryid,
-    var image,
-    var imagedecoded,
-  ) async {
+  Future updateCategoryImage(var imageencoded, var image, var catid) async {
     try {
-      String url = WebConfig.baseUrl + WebConfig.adminAddCategory;
+      String url = WebConfig.baseUrl + WebConfig.adminUpdateCatImage;
       final response = await http.post(Uri.parse(url), body: {
-        "name": name,
-        "description": description,
-        "category_id": categoryid.toString(),
+        "image_encoded": imageencoded,
         "image": image,
-        "imagedecoded": imagedecoded,
-        "centers_id": centersid.toString(),
+        "Cat_id": catid.toString()
       });
       log(response.body);
     } catch (e) {
-      log("[insertFood] $e");
+      log("[updateUserImageHandyMan] $e");
     }
   }
 
-  Future insertNews(
-    var title,
-    var description,
-    var image,
-    var imagedecoded,
-  ) async {
+  Future updateNewsText(var title, var description, var advid) async {
     try {
-      String url = WebConfig.baseUrl + WebConfig.addAdvertisment;
+      String url = WebConfig.baseUrl + WebConfig.adminUpdateAdv;
       final response = await http.post(Uri.parse(url), body: {
         "title": title,
         "description": description,
-        "image": image,
-        "imagedecoded": imagedecoded,
+        "Adv_id": advid.toString(),
       });
       log(response.body);
     } catch (e) {
-      log("[insertNews] $e");
+      log("[updateNewsText] $e");
     }
+  }
+
+  Future updateNewsImage(var imageencoded, var image, var advid) async {
+    try {
+      String url = WebConfig.baseUrl + WebConfig.adminUpdateAdvImage;
+      final response = await http.post(Uri.parse(url), body: {
+        "image_encoded": imageencoded,
+        "image": image,
+        "adv_id": advid.toString()
+      });
+      log(response.body);
+    } catch (e) {
+      log("[updateNewsImage] $e");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    title.text = widget.titleNews!;
+    desc.text = widget.desc!;
   }
 
   @override
@@ -140,7 +145,7 @@ class _AddnewsState extends State<Addnews> {
                         width: 300,
                         height: 200,
                         child: imageFile == null
-                            ? Image.asset('assets/images/noimage.png')
+                            ? Image.network(widget.image!)
                             : Image.file(File(imageFile!.path))),
                   ),
                   Positioned(
@@ -149,17 +154,36 @@ class _AddnewsState extends State<Addnews> {
                     right: 10.0,
                     child: Row(
                       children: [
-                        //imageFile == null ?
-                        InkWell(
-                          onTap: () async {
-                            chooseImage(ImageSource.gallery);
-                          },
-                          child: const Icon(
-                            Icons.camera_alt,
-                            color: Colors.black,
-                            size: 30.0,
-                          ),
-                        )
+                        imageFile == null
+                            ? InkWell(
+                                onTap: () async {
+                                  chooseImage(ImageSource.gallery);
+                                },
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.black,
+                                  size: 30.0,
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () async {
+                                  base64image = base64Encode(
+                                      imageFile!.readAsBytesSync());
+                                  imagepath = imageFile!.path.split("/").last;
+                                  if (widget.type == 'category') {
+                                    updateCategoryImage(
+                                        base64image, imagepath, widget.id);
+                                  } else if (widget.type == 'news') {
+                                    updateNewsImage(
+                                        base64image, imagepath, widget.id);
+                                  }
+                                },
+                                child: const Icon(
+                                  Icons.done,
+                                  color: Colors.green,
+                                  size: 30.0,
+                                ),
+                              )
                       ],
                     ),
                   ),
@@ -204,28 +228,16 @@ class _AddnewsState extends State<Addnews> {
               Center(
                   child: InkWell(
                 onTap: () {
-                  // int? userId = sharedPreferences!.getInt('userID');
-                  base64image = base64Encode(imageFile!.readAsBytesSync());
-                  imagepath = imageFile!.path.split("/").last;
-                  if (imageFile != null) {
-                    if (form.currentState!.validate()) {
-                      if (widget.type == 'category') {
-                        insertCategory(desc.text, imagepath, base64image);
-                        Get.offAll(() => const NavBar(typeId: 3));
-                      } else if (widget.type == 'news') {
-                        insertNews(
-                            title.text, desc.text, imagepath, base64image);
-                        Get.offAll(() => const NavBar(typeId: 3));
-                      } else if (widget.type == 'food') {
-                        insertFood(title.text, desc.text, 1, widget.newsId,
-                            imagepath, base64image);
-                        Get.offAll(() => const NavBar(typeId: 2));
-                      }
-
-                      showDoneSnackBar(context, "Added Successfully");
+                  if (form.currentState!.validate()) {
+                    if (widget.type == 'category') {
+                      updateCategorydesc(widget.id, desc.text);
+                      showDoneSnackBar(context, "Updated successfully");
+                      Get.offAll(() => const NavBar(typeId: 3));
+                    } else if (widget.type == 'news') {
+                      updateNewsText(title.text, desc.text, widget.id);
+                      showDoneSnackBar(context, "Updated successfully");
+                      Get.offAll(() => const NavBar(typeId: 3));
                     }
-                  } else {
-                    showErrorSnackBar(context, "You must upload image");
                   }
                 },
                 child: PrimaryButton(

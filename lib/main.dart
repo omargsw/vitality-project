@@ -4,7 +4,9 @@ import 'package:vitality/view/splash_screen.dart';
 import 'package:get/get.dart';
 
 SharedPreferences? sharedPreferences;
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  sharedPreferences = await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
 
