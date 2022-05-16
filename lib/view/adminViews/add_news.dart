@@ -10,6 +10,7 @@ import 'package:vitality/components/constant.dart';
 import 'package:vitality/components/main_app_bar.dart';
 import 'package:vitality/components/text_field.dart';
 import 'package:vitality/components/web_config.dart';
+import 'package:vitality/main.dart';
 import 'package:vitality/view/nav_bar.dart';
 import 'package:vitality/widgets/primary_button.dart';
 import 'package:http/http.dart' as http;
@@ -32,6 +33,7 @@ class Addnews extends StatefulWidget {
 }
 
 class _AddnewsState extends State<Addnews> {
+  int? userId = sharedPreferences!.getInt('userID');
   GlobalKey<FormState> form = GlobalKey<FormState>();
   TextEditingController title = TextEditingController();
   TextEditingController desc = TextEditingController();
@@ -216,7 +218,7 @@ class _AddnewsState extends State<Addnews> {
                             title.text, desc.text, imagepath, base64image);
                         Get.offAll(() => const NavBar(typeId: 3));
                       } else if (widget.type == 'food') {
-                        insertFood(title.text, desc.text, 1, widget.newsId,
+                        insertFood(title.text, desc.text, userId, widget.newsId,
                             imagepath, base64image);
                         Get.offAll(() => const NavBar(typeId: 2));
                       }
