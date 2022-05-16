@@ -84,15 +84,43 @@ class _ReservationsListState extends State<ReservationsList> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(
-                          title: Row(
+                          title: Column(
                             children: [
-                              Text(
-                                "Center name :  ",
-                                style: AppFonts.tajawal16GreenW600,
+                              Row(
+                                children: [
+                                  Text(
+                                    "Center name :  ",
+                                    style: AppFonts.tajawal16GreenW600,
+                                  ),
+                                  Text(
+                                    get.centerName,
+                                    style: AppFonts.tajawal14BlackW400,
+                                  ),
+                                ],
                               ),
-                              Text(
-                                get.centerName,
-                                style: AppFonts.tajawal14BlackW400,
+                              Row(
+                                children: [
+                                  Text(
+                                    "Date time :  ",
+                                    style: AppFonts.tajawal16GreenW600,
+                                  ),
+                                  Text(
+                                    get.time.toString(),
+                                    style: AppFonts.tajawal14BlackW400,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Fees :  ",
+                                    style: AppFonts.tajawal16GreenW600,
+                                  ),
+                                  Text(
+                                    get.fees.toString() + " JOD",
+                                    style: AppFonts.tajawal14BlackW400,
+                                  ),
+                                ],
                               ),
                             ],
                           ),

@@ -42,6 +42,9 @@ class WebConfig {
   static String centerUpdateFoodPlan = '/CenterUpdateFoodPlan.php';
   static String centerUpdateInfo = '/CenterUpdateInfo.php';
   static String centerUpdateImage = '/CenterUpdateImage.php';
+  static String centerUpdateFees = '/CenterUpdateFees.php';
+  static String centerAddDates = '/CenterAddDates.php';
+  static String centerRemoveDate = '/CenterRemoveDate.php';
 
   static String categoryImages = '/CategoryImages/';
   static String advImages = '/AdvImages/';

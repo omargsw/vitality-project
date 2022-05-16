@@ -165,7 +165,7 @@ class _AdminReservationsState extends State<AdminReservations> {
                                             style: AppFonts.tajawal14BlueW600,
                                           ),
                                           Text(
-                                            get.fees,
+                                            get.fees.toString(),
                                             style: AppFonts.tajawal14BlackW400,
                                           ),
                                         ],

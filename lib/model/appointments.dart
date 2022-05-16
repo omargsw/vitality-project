@@ -22,7 +22,7 @@ class GetAppointments {
   final int id;
   final String time;
   final String status;
-  final String fees;
+  final double fees;
   final String customerName;
   final String customerPhone;
   final String centerName;
@@ -33,7 +33,7 @@ class GetAppointments {
         id: json["id"],
         time: json["time"],
         status: json["status"],
-        fees: json["fees"],
+        fees: (json["fees"] == null) ? 0.0 : json["fees"].toDouble(),
         customerName: json["CustomerName"],
         customerPhone: json["CustomerPhone"],
         centerName: json["CenterName"],
@@ -44,7 +44,7 @@ class GetAppointments {
         "id": id,
         "time": time,
         "status": status,
-        "fees": fees,
+        "fees": (fees == null) ? 0.0 : fees,
         "CustomerName": customerName,
         "CustomerPhone": customerPhone,
         "CenterName": centerName,

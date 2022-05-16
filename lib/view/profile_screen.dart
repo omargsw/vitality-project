@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:vitality/components/color.dart';
 import 'package:vitality/components/constant.dart';
 import 'package:vitality/components/fonts.dart';
 import 'package:vitality/components/text_field.dart';
+import 'package:vitality/view/centerViews/center_schedule_appointments.dart';
 import 'package:vitality/widgets/primary_button.dart';
 import 'package:vitality/components/web_config.dart';
 import 'package:vitality/main.dart';
@@ -142,6 +144,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: typeId == 2
+          ? FloatingActionButton.extended(
+              backgroundColor: AppColors.secondaryColor,
+              foregroundColor: Colors.white,
+              onPressed: () => Get.to(const ScheduleAppointments()),
+              icon: const Icon(Icons.add),
+              label: const Text('Add a dates'),
+            )
+          : Container(),
       body: Container(
         padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
         child: ListView.builder(

@@ -7,6 +7,7 @@ import 'package:vitality/components/color.dart';
 import 'package:vitality/components/fonts.dart';
 import 'package:vitality/components/icon_button.dart';
 import 'package:http/http.dart' as http;
+import 'package:vitality/components/text_field.dart';
 import 'package:vitality/components/web_config.dart';
 import 'package:vitality/main.dart';
 import 'package:vitality/model/appointments.dart';
@@ -21,6 +22,8 @@ class ReservationsDepartment extends StatefulWidget {
 class _ReservationsDepartmentState extends State<ReservationsDepartment> {
   int? userId = sharedPreferences!.getInt('userID');
   bool isLoading = false;
+  GlobalKey<FormState> form = GlobalKey<FormState>();
+  var fees = TextEditingController();
 
   List<GetAppointments> appointments = [];
   Future getAppointments() async {
@@ -66,6 +69,22 @@ class _ReservationsDepartmentState extends State<ReservationsDepartment> {
       log(response.body);
     } catch (e) {
       log("[insertCategory] $e");
+    }
+  }
+
+  Future updateFees(
+    var appid,
+    var fees,
+  ) async {
+    try {
+      String url = WebConfig.baseUrl + WebConfig.centerUpdateFees;
+      final response = await http.post(Uri.parse(url), body: {
+        "app_id": appid.toString(),
+        "fees": fees.toString(),
+      });
+      log(response.body);
+    } catch (e) {
+      log("[updateFees] $e");
     }
   }
 
@@ -168,22 +187,124 @@ class _ReservationsDepartmentState extends State<ReservationsDepartment> {
                                         showDialog<String>(
                                             context: context,
                                             builder: (BuildContext context) {
-                                              return AlertDialogWidget(
-                                                  title:
-                                                      "Are you sure to accept the reservation?",
-                                                  onTapYes: () {
-                                                    centerAccpetAppointment(
-                                                        get.id);
-                                                    setState(() {
-                                                      getAppointments()
-                                                          .then((list) {
+                                              return AlertDialog(
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    20.0))),
+                                                backgroundColor: Colors.white,
+                                                content: SizedBox(
+                                                  height: 200,
+                                                  width: width,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                10, 0, 10, 20),
+                                                        child: Center(
+                                                          child: Text(
+                                                              "Are you sure to accept this appointment?",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              style: TextStyle(
+                                                                  color: AppColors
+                                                                      .primaryColor)),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10),
+                                                        child: Text(
+                                                            "Enter the fees here",
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: AppFonts
+                                                                .tajawal14BlackW400),
+                                                      ),
+                                                      Form(
+                                                        key: form,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  vertical: 10),
+                                                          child:
+                                                              TextFieldWidget(
+                                                            hintText:
+                                                                "Enter the fees..",
+                                                            prefixIcon:
+                                                                const Icon(
+                                                              Icons
+                                                                  .attach_money_outlined,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                            controller: fees,
+                                                            suffixIconButton:
+                                                                null,
+                                                            ob: false,
+                                                            type: "name",
+                                                            inputType:
+                                                                TextInputType
+                                                                    .phone,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Get.back();
+                                                    },
+                                                    child: Text('Cancel',
+                                                        style: TextStyle(
+                                                          color: AppColors
+                                                              .secondaryColor,
+                                                        )),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      if (form.currentState!
+                                                          .validate()) {
+                                                        centerAccpetAppointment(
+                                                            get.id);
+                                                        updateFees(
+                                                            get.id, fees.text);
                                                         setState(() {
-                                                          appointments = list;
+                                                          getAppointments()
+                                                              .then((list) {
+                                                            setState(() {
+                                                              appointments =
+                                                                  list;
+                                                            });
+                                                          });
                                                         });
-                                                      });
-                                                    });
-                                                    Get.back();
-                                                  });
+                                                        Get.back();
+                                                      }
+                                                    },
+                                                    child: Text('Accept',
+                                                        style: TextStyle(
+                                                          color: AppColors
+                                                              .secondaryColor,
+                                                        )),
+                                                  ),
+                                                ],
+                                              );
                                             });
                                       },
                                       child: const IconButtonWidget(

@@ -113,10 +113,12 @@ class _CentersPageState extends State<CentersPage> {
                                 width: width,
                                 padding: const EdgeInsets.all(5),
                                 color: Colors.white,
-                                child: Text(
-                                  get.name,
-                                  style: AppFonts.tajawal14BlueW600,
-                                  textAlign: TextAlign.center,
+                                child: Center(
+                                  child: Text(
+                                    get.name,
+                                    style: AppFonts.tajawal14BlueW600,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
                               )),
                             ],
