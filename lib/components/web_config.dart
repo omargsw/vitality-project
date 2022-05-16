@@ -12,6 +12,7 @@ class WebConfig {
   static String customerUpdateImage = '/CustomerUpdateImage.php';
   static String customerAddApointment = '/CustomerAddApointment.php';
   static String customerGetDate = '/CustomerGetDate.php';
+  static String customerSubscription = '/CustomerSubscription.php';
 
   ///Adimn
   static String adminLogin = '/AdminLogin.php';

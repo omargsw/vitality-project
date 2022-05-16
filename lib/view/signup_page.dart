@@ -1,13 +1,16 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:vitality/components/app_bar_login.dart';
 import 'package:vitality/components/color.dart';
 import 'package:vitality/components/constant.dart';
 import 'package:vitality/components/fonts.dart';
 import 'package:vitality/components/text_field.dart';
 import 'package:vitality/components/web_config.dart';
+import 'package:vitality/view/login_page.dart';
 import 'package:vitality/view/question_page.dart';
 import 'package:vitality/widgets/primary_button.dart';
 import 'package:http/http.dart' as http;
@@ -37,13 +40,23 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController phone = TextEditingController();
   TextEditingController name = TextEditingController();
   bool islogin = true;
+  String? fromDate;
+  String? endDate;
+
+  DateRangePickerController datePickerController = DateRangePickerController();
 
   var selecteditem = null;
   var items = [
     'Month       25 JOD',
     '2 Month     45 JOD',
     '3 Month     60 JOD',
-    '1 Year      99 JOD',
+    '1 Year     99 JOD',
+  ];
+
+  var month = [
+    1,
+    2,
+    3,
   ];
 
   Future<bool> userSignUp(var email, var pass, var phone, var name) async {
@@ -58,9 +71,37 @@ class _SignUpPageState extends State<SignUpPage> {
     if (json['error']) {
       showErrorSnackBar(context, "User already registered");
     } else {
-      Get.to(const QuestionPage());
+      // insertcustomerSubscription(customerid, fromDate, endDate);
+      Get.to(const LoginScreen(
+        typeId: 1,
+      ));
     }
     return true;
+  }
+
+  Future insertcustomerSubscription(
+    var customerid,
+    var fromdate,
+    var todate,
+  ) async {
+    try {
+      String url = WebConfig.baseUrl + WebConfig.customerSubscription;
+      final response = await http.post(Uri.parse(url), body: {
+        "customer_id": customerid.toString(),
+        "from_date": fromdate.toString(),
+        "to_date": todate.toString(),
+      });
+      log(response.body);
+    } catch (e) {
+      log("[insertcustomerSubscription] $e");
+    }
+  }
+
+  @override
+  void initState() {
+    datePickerController.selectedDate =
+        DateTime.now().add(const Duration(days: 0));
+    super.initState();
   }
 
   @override
@@ -157,7 +198,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 left: 30, right: 30, top: 8, bottom: 8),
                             child: DropdownButton<String>(
                               hint: Text(
-                                "Select",
+                                "Select the subscription",
                                 style: AppFonts.tajawal14BlackW400,
                               ),
                               isExpanded: true,
@@ -172,7 +213,29 @@ class _SignUpPageState extends State<SignUpPage> {
                               onChanged: (newValue) {
                                 setState(() {
                                   selecteditem = newValue;
-                                  print(selecteditem);
+                                  if (selecteditem == "Month       25 JOD") {
+                                    fromDate =
+                                        "${datePickerController.selectedDate!.year}-${datePickerController.selectedDate!.month}-${datePickerController.selectedDate!.day}";
+                                    endDate =
+                                        "${datePickerController.selectedDate!.year}-${datePickerController.selectedDate!.month + 1}-${datePickerController.selectedDate!.day}";
+                                  } else if (selecteditem ==
+                                      "2 Month     45 JOD") {
+                                    fromDate =
+                                        "${datePickerController.selectedDate!.year}-${datePickerController.selectedDate!.month}-${datePickerController.selectedDate!.day}";
+                                    endDate =
+                                        "${datePickerController.selectedDate!.year}-${datePickerController.selectedDate!.month + 2}-${datePickerController.selectedDate!.day}";
+                                  } else if (selecteditem ==
+                                      "3 Month     60 JOD") {
+                                    fromDate =
+                                        "${datePickerController.selectedDate!.year}-${datePickerController.selectedDate!.month}-${datePickerController.selectedDate!.day}";
+                                    endDate =
+                                        "${datePickerController.selectedDate!.year}-${datePickerController.selectedDate!.month + 3}-${datePickerController.selectedDate!.day}";
+                                  } else {
+                                    fromDate =
+                                        "${datePickerController.selectedDate!.year}-${datePickerController.selectedDate!.month}-${datePickerController.selectedDate!.day}";
+                                    endDate =
+                                        "${datePickerController.selectedDate!.year + 1}-${datePickerController.selectedDate!.month}-${datePickerController.selectedDate!.day}";
+                                  }
                                 });
                               },
                               items: items.map((String items) {
@@ -249,8 +312,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       InkWell(
                         onTap: () {
                           if (form.currentState!.validate()) {
-                            userSignUp(
-                                email.text, pass2.text, phone.text, name.text);
+                            if (selecteditem != null) {
+                              userSignUp(email.text, pass2.text, phone.text,
+                                  name.text);
+                            } else {
+                              showErrorSnackBar(
+                                  context, "You must select the subscription");
+                            }
                           }
                         },
                         child: PrimaryButton(
