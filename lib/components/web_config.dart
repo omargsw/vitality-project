@@ -7,7 +7,11 @@ class WebConfig {
   static String getCategory = '/GetCategory.php';
   static String getAdvertisment = '/GetAdvertisment.php';
   static String getCenter = '/GetCenter.php';
-  static String addCenter = '/AddCenter.php';
+  static String customerGetFood = '/CustomerGetFood.php';
+  static String customerUpdateInfo = '/CustomerUpdateInfo.php';
+  static String customerUpdateImage = '/CustomerUpdateImage.php';
+  static String customerAddApointment = '/CustomerAddApointment.php';
+  static String customerGetDate = '/CustomerGetDate.php';
 
   ///Adimn
   static String adminLogin = '/AdminLogin.php';
@@ -25,6 +29,7 @@ class WebConfig {
   static String adminRemoveCustomer = '/AdminRemoveCustomer.php';
   static String adminRemoveCenter = '/AdminRemoveCenter.php';
   static String adminGetAppointments = '/AdminGetAppointments.php';
+  static String addCenter = '/AddCenter.php';
 
   ///Center
   static String centerLogin = '/CenterLogin.php';
@@ -33,9 +38,10 @@ class WebConfig {
   static String centerAccpetAppointment = '/CenterAccpetAppointment.php';
   static String centerRejectAppointment = '/CenterRejectAppointment.php';
   static String centerViewAppoimtments = '/CenterViewAppoimtments.php';
-  // static String centerRejectAppointment = '/CenterRejectAppointment.php';
-  // static String centerRejectAppointment = '/CenterRejectAppointment.php';
-  // static String centerRejectAppointment = '/CenterRejectAppointment.php';
+  static String centerFoodPlan = '/CenterFoodPlan.php';
+  static String centerUpdateFoodPlan = '/CenterUpdateFoodPlan.php';
+  static String centerUpdateInfo = '/CenterUpdateInfo.php';
+  static String centerUpdateImage = '/CenterUpdateImage.php';
 
   static String categoryImages = '/CategoryImages/';
   static String advImages = '/AdvImages/';

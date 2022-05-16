@@ -1,12 +1,18 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:vitality/components/alert_dialog.dart';
 import 'package:vitality/components/color.dart';
+import 'package:vitality/components/constant.dart';
 import 'package:vitality/components/fonts.dart';
 import 'package:vitality/components/main_app_bar.dart';
 import 'package:vitality/components/web_config.dart';
 import 'package:vitality/widgets/primary_button.dart';
+import 'package:http/http.dart' as http;
+import 'package:vitality/model/get_date.dart';
+import 'package:vitality/main.dart';
 
 class CenterDetailsPage extends StatefulWidget {
+  final int centerId;
   final String? image;
   final String? name;
   final String? email;
@@ -17,6 +23,7 @@ class CenterDetailsPage extends StatefulWidget {
     required this.email,
     required this.phone,
     required this.image,
+    required this.centerId,
   }) : super(key: key);
 
   @override
@@ -24,13 +31,57 @@ class CenterDetailsPage extends StatefulWidget {
 }
 
 class _CenterDetailsPageState extends State<CenterDetailsPage> {
+  int? userId = sharedPreferences!.getInt('userID');
   var selecteditem = null;
-  var items = [
-    '20/4/2022 11:00 AM',
-    '22/4/2022 5:00 PM',
-    '24/4/2022 6:30 PM',
-    '25/4/2022 8:10 PM',
-  ];
+  bool isLoading = false;
+
+  List<GetDate> dates = [];
+  Future fetchDate() async {
+    isLoading = true;
+    try {
+      String url = WebConfig.baseUrl +
+          WebConfig.customerGetDate +
+          "?center_id=${widget.centerId}";
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final List<GetDate> list = getDateFromJson(response.body);
+        return list;
+      }
+    } catch (e) {
+      log("[fetchDate] $e");
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  Future insertApointment(
+    var customerid,
+    var nutritionscentersid,
+    var time,
+  ) async {
+    try {
+      String url = WebConfig.baseUrl + WebConfig.customerAddApointment;
+      final response = await http.post(Uri.parse(url), body: {
+        "customer_id": customerid.toString(),
+        "nutritions_centers_id": nutritionscentersid.toString(),
+        "time": time.toString(),
+      });
+      log(response.body);
+    } catch (e) {
+      log("[insertApointment] $e");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDate().then((list) {
+      setState(() {
+        dates = list;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -150,32 +201,33 @@ class _CenterDetailsPageState extends State<CenterDetailsPage> {
                             padding: const EdgeInsets.only(
                                 left: 30, right: 30, top: 3, bottom: 3),
                             child: DropdownButton<String>(
-                              hint: Text(
-                                "Choose the date",
+                                hint: Text(
+                                  "Choose the date",
+                                  style: AppFonts.tajawal14BlackW400,
+                                ),
+                                isExpanded: true,
+                                underline: Container(),
+                                value: selecteditem,
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down_outlined,
+                                  color: Colors.black,
+                                ),
+                                elevation: 16,
                                 style: AppFonts.tajawal14BlackW400,
-                              ),
-                              isExpanded: true,
-                              underline: Container(),
-                              value: selecteditem,
-                              icon: const Icon(
-                                Icons.keyboard_arrow_down_outlined,
-                                color: Colors.black,
-                              ),
-                              elevation: 16,
-                              style: AppFonts.tajawal14BlackW400,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  selecteditem = newValue;
-                                  print(selecteditem);
-                                });
-                              },
-                              items: items.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                            ),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    selecteditem = newValue;
+                                    print(selecteditem);
+                                  });
+                                },
+                                items: dates.map((date) {
+                                  return DropdownMenuItem(
+                                      value: date.id.toString(),
+                                      child: Text(
+                                        date.dateTime,
+                                        style: AppFonts.tajawal14BlackW400,
+                                      ));
+                                }).toList()),
                           )),
                     ),
                     const SizedBox(
@@ -188,7 +240,17 @@ class _CenterDetailsPageState extends State<CenterDetailsPage> {
                               builder: (BuildContext context) {
                                 return AlertDialogWidget(
                                     title: "Are you sure about booking it?",
-                                    onTapYes: () {});
+                                    onTapYes: () {
+                                      if (selecteditem != null) {
+                                        insertApointment(userId,
+                                            widget.centerId, selecteditem);
+                                        showDoneSnackBar(
+                                            context, "Booked successfully");
+                                      } else {
+                                        showErrorSnackBar(context,
+                                            "You must select a date time");
+                                      }
+                                    });
                               });
                         },
                         child: PrimaryButton(

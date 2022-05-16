@@ -216,6 +216,7 @@ class _HomePageState extends State<HomePage> {
                                 imagePath: WebConfig.baseUrl +
                                     WebConfig.categoryImages +
                                     get.image,
+                                categoryId: get.id,
                               ));
                             },
                             child: MealsCard(

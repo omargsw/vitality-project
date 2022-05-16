@@ -10,7 +10,6 @@ import 'package:vitality/components/constant.dart';
 import 'package:vitality/components/main_app_bar.dart';
 import 'package:vitality/components/text_field.dart';
 import 'package:vitality/components/web_config.dart';
-import 'package:vitality/main.dart';
 import 'package:vitality/view/nav_bar.dart';
 import 'package:vitality/widgets/primary_button.dart';
 import 'package:http/http.dart' as http;
@@ -84,7 +83,7 @@ class _AddnewsState extends State<Addnews> {
     var imagedecoded,
   ) async {
     try {
-      String url = WebConfig.baseUrl + WebConfig.adminAddCategory;
+      String url = WebConfig.baseUrl + WebConfig.centerAddFood;
       final response = await http.post(Uri.parse(url), body: {
         "name": name,
         "description": description,

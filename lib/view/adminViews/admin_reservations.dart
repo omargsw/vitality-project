@@ -113,7 +113,7 @@ class _AdminReservationsState extends State<AdminReservations> {
                                       Row(
                                         children: [
                                           Text(
-                                            "Name :  ",
+                                            "Customer name :  ",
                                             style: AppFonts.tajawal16GreenW600,
                                           ),
                                           Text(
@@ -125,7 +125,7 @@ class _AdminReservationsState extends State<AdminReservations> {
                                       Row(
                                         children: [
                                           Text(
-                                            "Phone :  ",
+                                            "Customer phone :  ",
                                             style: AppFonts.tajawal16GreenW600,
                                           ),
                                           Text(

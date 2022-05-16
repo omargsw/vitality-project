@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vitality/components/alert_dialog.dart';
 import 'package:vitality/components/color.dart';
 import 'package:vitality/components/fonts.dart';
@@ -37,6 +38,34 @@ class _ReservationsDepartmentState extends State<ReservationsDepartment> {
       log("[getAppointments] $e");
     } finally {
       isLoading = false;
+    }
+  }
+
+  Future centerAccpetAppointment(
+    var appid,
+  ) async {
+    try {
+      String url = WebConfig.baseUrl + WebConfig.centerAccpetAppointment;
+      final response = await http.post(Uri.parse(url), body: {
+        "app_id": appid.toString(),
+      });
+      log(response.body);
+    } catch (e) {
+      log("[insertCategory] $e");
+    }
+  }
+
+  Future centerRejectAppointment(
+    var appid,
+  ) async {
+    try {
+      String url = WebConfig.baseUrl + WebConfig.centerRejectAppointment;
+      final response = await http.post(Uri.parse(url), body: {
+        "app_id": appid.toString(),
+      });
+      log(response.body);
+    } catch (e) {
+      log("[insertCategory] $e");
     }
   }
 
@@ -142,7 +171,19 @@ class _ReservationsDepartmentState extends State<ReservationsDepartment> {
                                               return AlertDialogWidget(
                                                   title:
                                                       "Are you sure to accept the reservation?",
-                                                  onTapYes: () {});
+                                                  onTapYes: () {
+                                                    centerAccpetAppointment(
+                                                        get.id);
+                                                    setState(() {
+                                                      getAppointments()
+                                                          .then((list) {
+                                                        setState(() {
+                                                          appointments = list;
+                                                        });
+                                                      });
+                                                    });
+                                                    Get.back();
+                                                  });
                                             });
                                       },
                                       child: const IconButtonWidget(
@@ -157,9 +198,21 @@ class _ReservationsDepartmentState extends State<ReservationsDepartment> {
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialogWidget(
-                                                title:
-                                                    "Are you sure to reject the reservation?",
-                                                onTapYes: () {});
+                                              title:
+                                                  "Are you sure to reject the reservation?",
+                                              onTapYes: () {
+                                                centerRejectAppointment(get.id);
+                                                setState(() {
+                                                  getAppointments()
+                                                      .then((list) {
+                                                    setState(() {
+                                                      appointments = list;
+                                                    });
+                                                  });
+                                                });
+                                                Get.back();
+                                              },
+                                            );
                                           });
                                     },
                                     child: const IconButtonWidget(

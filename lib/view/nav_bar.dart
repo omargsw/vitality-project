@@ -50,7 +50,7 @@ class _NavBarState extends State<NavBar> {
     final List<Widget> _pagesCenter = <Widget>[
       const ReservationsDepartment(),
       const CenterCategories(),
-      const CenterProfileScreen(),
+      const ProfileScreen(),
     ];
     final List<Widget> _pagesAdmin = <Widget>[
       const AdminCategories(),

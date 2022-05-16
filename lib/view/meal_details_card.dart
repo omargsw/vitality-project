@@ -27,7 +27,7 @@ class _MealDetailsCardState extends State<MealDetailsCard> {
         width: width,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(widget.imagePath!),
+            image: NetworkImage(widget.imagePath!),
             fit: BoxFit.cover,
           ),
         ),
@@ -52,7 +52,7 @@ class _MealDetailsCardState extends State<MealDetailsCard> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "asdasd asdklasd asdjhasdkj asjdhasjkd asdasd asd asd asdasd asd ",
+                      widget.desc!,
                       style: AppFonts.tajawal20WhiteW600,
                       textAlign: TextAlign.center,
                     ),

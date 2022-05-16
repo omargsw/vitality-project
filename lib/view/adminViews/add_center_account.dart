@@ -1,24 +1,32 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:vitality/components/color.dart';
+import 'package:vitality/components/constant.dart';
 import 'package:vitality/components/fonts.dart';
+import 'package:vitality/components/main_app_bar.dart';
 import 'package:vitality/components/text_field.dart';
+import 'package:vitality/components/web_config.dart';
 import 'package:vitality/widgets/primary_button.dart';
 
-class CenterProfileScreen extends StatefulWidget {
-  const CenterProfileScreen({Key? key}) : super(key: key);
+class AddCenterAccount extends StatefulWidget {
+  const AddCenterAccount({Key? key}) : super(key: key);
 
   @override
-  State<CenterProfileScreen> createState() => _CenterProfileScreenState();
+  State<AddCenterAccount> createState() => _AddCenterAccountState();
 }
 
-class _CenterProfileScreenState extends State<CenterProfileScreen> {
+class _AddCenterAccountState extends State<AddCenterAccount> {
   GlobalKey<FormState> form = GlobalKey<FormState>();
   var name = TextEditingController();
   var phone = TextEditingController();
   var email = TextEditingController();
+  var location = TextEditingController();
+  var stname = TextEditingController();
+  var desc = TextEditingController();
   var pass = TextEditingController();
   var pass2 = TextEditingController();
   var pass3 = TextEditingController();
@@ -81,101 +89,47 @@ class _CenterProfileScreenState extends State<CenterProfileScreen> {
     });
   }
 
-  // Widget bottomSheet() {
-  //   return Container(
-  //     height: 100.0,
-  //     width: MediaQuery.of(context).size.width,
-  //     margin: const EdgeInsets.symmetric(
-  //       horizontal: 20,
-  //       vertical: 20,
-  //     ),
-  //     child: Column(
-  //       children: <Widget>[
-  //         const Text(
-  //           "Choose profile image",
-  //           style: TextStyle(
-  //             fontSize: 20.0,
-  //           ),
-  //         ),
-  //         const SizedBox(
-  //           height: 3,
-  //         ),
-  //         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-  //           FlatButton.icon(
-  //             icon: const Icon(Icons.image),
-  //             onPressed: () {
-  //               chooseImage(ImageSource.gallery);
-  //               Navigator.pop(context);
-  //             },
-  //             label: Text("gallery",style: TextStyle(),),
-  //
-  //           ),
-  //         ])
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  @override
-  void initState() {
-    // typeId = sharedPreferences!.getInt('typeID');
-    // print(typeId);
-    super.initState();
+  Future insertCenter(
+    var name,
+    var email,
+    var phone,
+    var password,
+    var image,
+    var imagedecoded,
+    var location,
+    var streetname,
+    var description,
+  ) async {
+    try {
+      String url = WebConfig.baseUrl + WebConfig.addCenter;
+      final response = await http.post(Uri.parse(url), body: {
+        "name": name.toString(),
+        "email": email.toString(),
+        "phone": phone.toString(),
+        "password": password.toString(),
+        "image": image.toString(),
+        "imagedecoded": imagedecoded.toString(),
+        "location": location.toString(),
+        "street_name": streetname.toString(),
+        "description": description.toString(),
+      });
+      log(response.body);
+    } catch (e) {
+      log("[insertCenter] $e");
+    }
   }
-
-  // Future updateName(int id, var name) async {
-  //   String url = 'https://abulsamrie11.000webhostapp.com/onTheGo/updatename.php';
-  //   final response = await http.post(Uri.parse(url),
-  //       body: {"id": id.toString(), "name": name});
-  //
-  //   print('UPDATE-NAME------>' + response.body);
-  // }
-
-  // Future updatePhone(int id, var phone) async {
-  //   String url = 'https://abulsamrie11.000webhostapp.com/onTheGo/updatephone.php';
-  //   final response = await http.post(Uri.parse(url),
-  //       body: {"id": id.toString(), "phone": phone});
-  //
-  //   print('UPDATE-PHONE------>' + response.body);
-  // }
-  //
-  // Future updatePassword(int id, var password) async {
-  //   String url = 'https://abulsamrie11.000webhostapp.com/onTheGo/updatepassword.php';
-  //   final response = await http.post(Uri.parse(url),
-  //       body: {"id": id.toString(), "password": password});
-  //
-  //   print('UPDATE-PASSWORD------>' + response.body);
-  // }
-  // Future updateImage(int id, var image,var profileDecoded) async {
-  //   String url = 'https://abulsamrie11.000webhostapp.com/onTheGo/updateimage.php';
-  //   final response = await http.post(Uri.parse(url),
-  //       body: {"id": id.toString(), "image": image,"profileDecoded": profileDecoded});
-  //
-  //   print('UPDATE-IMAGE------>' + response.body);
-  // }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: mainAppBar(title: "Add center account", iconButton: null),
       body: Container(
         padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
         child: ListView.builder(
           itemCount: 1,
           itemBuilder: (context, index) {
-            //UserInfoApi userApi = widget.user![index];
-            // if(widget.user!.isEmpty || widget.user == null){
-            //   return Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: const [
-            //       CircularProgressIndicator(),
-            //     ],
-            //   );
-            // }else{
-            //   fname.text = userApi.name;
-            //   phnum.text = userApi.phone;
-            //   email.text = userApi.email;
             return Column(
               children: [
                 const SizedBox(
@@ -200,7 +154,7 @@ class _CenterProfileScreenState extends State<CenterProfileScreen> {
                               ),
                               child: ClipOval(
                                 child: Image.asset(
-                                  'assets/images/logo.jpeg',
+                                  'assets/images/nouserimage.jpg',
                                   width: 200,
                                   height: 200,
                                   fit: BoxFit.cover,
@@ -231,57 +185,16 @@ class _CenterProfileScreenState extends State<CenterProfileScreen> {
                         right: 0.0,
                         child: Row(
                           children: [
-                            imageFile == null
-                                ? InkWell(
-                                    onTap: () async {
-                                      // showModalBottomSheet(
-                                      //   context: context,
-                                      //   builder: ((builder) => bottomSheet()),
-                                      // );
-                                    },
-                                    child: const Icon(
-                                      Icons.camera_alt,
-                                      color: Colors.black,
-                                      size: 30.0,
-                                    ),
-                                  )
-                                : Row(
-                                    children: [
-                                      InkWell(
-                                        onTap: () async {
-                                          // showModalBottomSheet(
-                                          //   context: context,
-                                          //   builder: ((builder) => bottomSheet()),
-                                          //
-                                          // );
-                                        },
-                                        child: const Icon(
-                                          Icons.camera_alt,
-                                          color: Colors.white,
-                                          size: 30.0,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            // if (imageFile == null ) return ;
-                                            // photo = base64Encode(imageFile!.readAsBytesSync());
-                                            // imagepath = imageFile!.path.split("/").last;
-                                            // updateImage(id!, imagepath, photo);
-                                            // imageCache!.clear();
-                                          },
-                                          child: const Icon(
-                                            Icons.done,
-                                            color:
-                                                Color.fromARGB(250, 9, 85, 245),
-                                            size: 30.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                            InkWell(
+                              onTap: () async {
+                                chooseImage(ImageSource.gallery);
+                              },
+                              child: const Icon(
+                                Icons.camera_alt,
+                                color: Colors.black,
+                                size: 30.0,
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -300,48 +213,17 @@ class _CenterProfileScreenState extends State<CenterProfileScreen> {
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.grey.withOpacity(0.4),
-                                          blurRadius: 20,
-                                          offset: Offset(1, 2))
-                                    ]),
-                                child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.name,
-                                    decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.all(10),
-                                      //hintText: Text("Email"),
-                                      labelText: "Name..",
-                                      labelStyle: AppFonts.tajawal14BlackW400,
-                                      fillColor: Colors.white,
-                                      focusColor: Colors.white,
-                                      enabled: false,
-                                      filled: true,
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      prefixIcon: const Icon(
-                                        Icons.person,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return "required";
-                                      }
-                                      return null;
-                                    },
-                                    controller: name,
-                                  ),
+                              TextFieldWidget(
+                                hintText: "Name..",
+                                prefixIcon: const Icon(
+                                  Icons.person,
+                                  color: Colors.black,
                                 ),
+                                controller: name,
+                                suffixIconButton: null,
+                                ob: false,
+                                type: "name",
+                                inputType: TextInputType.name,
                               ),
                               const SizedBox(
                                 height: 10,
@@ -372,6 +254,81 @@ class _CenterProfileScreenState extends State<CenterProfileScreen> {
                                 ob: false,
                                 type: "phone",
                                 inputType: TextInputType.phone,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFieldWidget(
+                                hintText: "Location..",
+                                prefixIcon: const Icon(
+                                  Icons.location_on,
+                                  color: Colors.black,
+                                ),
+                                controller: location,
+                                suffixIconButton: null,
+                                ob: false,
+                                type: "name",
+                                inputType: TextInputType.name,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFieldWidget(
+                                hintText: "Street Name..",
+                                prefixIcon: const Icon(
+                                  Icons.location_city,
+                                  color: Colors.black,
+                                ),
+                                controller: stname,
+                                suffixIconButton: null,
+                                ob: false,
+                                type: "name",
+                                inputType: TextInputType.name,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.4),
+                                          blurRadius: 20,
+                                          offset: Offset(1, 2))
+                                    ]),
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  child: TextFormField(
+                                    maxLines: 3,
+                                    keyboardType: TextInputType.name,
+                                    decoration: InputDecoration(
+                                      contentPadding: const EdgeInsets.all(10),
+                                      labelText: "Description..",
+                                      labelStyle: AppFonts.tajawal14BlackW400,
+                                      fillColor: Colors.white,
+                                      focusColor: Colors.white,
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      prefixIcon: const Icon(
+                                        Icons.text_snippet_rounded,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "required";
+                                      }
+                                      return null;
+                                    },
+                                    controller: desc,
+                                  ),
+                                ),
                               ),
                               const SizedBox(
                                 height: 10,
@@ -439,7 +396,46 @@ class _CenterProfileScreenState extends State<CenterProfileScreen> {
                                 height: 40,
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  if (form.currentState!.validate()) {
+                                    if (imageFile != null) {
+                                      if (pass.text == pass2.text) {
+                                        photo = base64Encode(
+                                            imageFile!.readAsBytesSync());
+                                        imagepath =
+                                            imageFile!.path.split("/").last;
+                                        insertCenter(
+                                          name.text,
+                                          email.text,
+                                          phone.text,
+                                          pass2.text,
+                                          imageFile,
+                                          photo,
+                                          location.text,
+                                          stname.text,
+                                          desc.text,
+                                        );
+                                        showDoneSnackBar(
+                                            context, "Added Successfully");
+                                        imageFile == null;
+                                        name.clear();
+                                        email.clear();
+                                        phone.clear();
+                                        pass.clear();
+                                        pass2.clear();
+                                        location.clear();
+                                        stname.clear();
+                                        desc.clear();
+                                      } else {
+                                        showErrorSnackBar(
+                                            context, "Password doesn't match!");
+                                      }
+                                    } else {
+                                      showErrorSnackBar(context,
+                                          "You must upload account picture");
+                                    }
+                                  }
+                                },
                                 child: PrimaryButton(
                                   title: "SAVE",
                                   width: width * 0.7,

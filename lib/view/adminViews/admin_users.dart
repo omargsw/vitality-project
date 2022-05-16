@@ -12,6 +12,7 @@ import 'package:vitality/components/web_config.dart';
 import 'package:vitality/model/centers.dart';
 import 'package:vitality/model/customers_accounts.dart';
 import 'package:http/http.dart' as http;
+import 'package:vitality/view/adminViews/add_center_account.dart';
 
 class AdminUsers extends StatefulWidget {
   const AdminUsers({Key? key}) : super(key: key);
@@ -172,23 +173,6 @@ class _AdminUsersState extends State<AdminUsers>
                           ),
                           const Spacer(),
                           InkWell(
-                              onTap: () {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialogWidget(
-                                          title:
-                                              "Are you sure to make Omar Wathaifi as a center account?",
-                                          onTapYes: () {});
-                                    });
-                              },
-                              child: const IconButtonWidget(
-                                  color: Colors.green,
-                                  icons: Icons.playlist_add_sharp)),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          InkWell(
                             onTap: () {
                               showDialog<String>(
                                   context: context,
@@ -342,6 +326,13 @@ class _AdminUsersState extends State<AdminUsers>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: AppColors.secondaryColor,
+        foregroundColor: Colors.white,
+        onPressed: () => Get.to(const AddCenterAccount()),
+        icon: const Icon(Icons.add),
+        label: const Text('Add Center Account'),
+      ),
       body: Stack(
         children: [
           SizedBox(

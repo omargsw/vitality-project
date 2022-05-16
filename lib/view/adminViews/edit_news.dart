@@ -117,6 +117,20 @@ class _EditNewsState extends State<EditNews> {
     }
   }
 
+  Future updateFoodPlanText(var name, var description, var foodid) async {
+    try {
+      String url = WebConfig.baseUrl + WebConfig.centerUpdateFoodPlan;
+      final response = await http.post(Uri.parse(url), body: {
+        "name": name,
+        "description": description,
+        "food_id": foodid.toString(),
+      });
+      log(response.body);
+    } catch (e) {
+      log("[updateFoodPlanText] $e");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -148,45 +162,48 @@ class _EditNewsState extends State<EditNews> {
                             ? Image.network(widget.image!)
                             : Image.file(File(imageFile!.path))),
                   ),
-                  Positioned(
-                    bottom: 0.0,
-                    top: 180,
-                    right: 10.0,
-                    child: Row(
-                      children: [
-                        imageFile == null
-                            ? InkWell(
-                                onTap: () async {
-                                  chooseImage(ImageSource.gallery);
-                                },
-                                child: const Icon(
-                                  Icons.camera_alt,
-                                  color: Colors.black,
-                                  size: 30.0,
-                                ),
-                              )
-                            : InkWell(
-                                onTap: () async {
-                                  base64image = base64Encode(
-                                      imageFile!.readAsBytesSync());
-                                  imagepath = imageFile!.path.split("/").last;
-                                  if (widget.type == 'category') {
-                                    updateCategoryImage(
-                                        base64image, imagepath, widget.id);
-                                  } else if (widget.type == 'news') {
-                                    updateNewsImage(
-                                        base64image, imagepath, widget.id);
-                                  }
-                                },
-                                child: const Icon(
-                                  Icons.done,
-                                  color: Colors.green,
-                                  size: 30.0,
-                                ),
-                              )
-                      ],
-                    ),
-                  ),
+                  widget.type == 'food'
+                      ? Container()
+                      : Positioned(
+                          bottom: 0.0,
+                          top: 180,
+                          right: 10.0,
+                          child: Row(
+                            children: [
+                              imageFile == null
+                                  ? InkWell(
+                                      onTap: () async {
+                                        chooseImage(ImageSource.gallery);
+                                      },
+                                      child: const Icon(
+                                        Icons.camera_alt,
+                                        color: Colors.black,
+                                        size: 30.0,
+                                      ),
+                                    )
+                                  : InkWell(
+                                      onTap: () async {
+                                        base64image = base64Encode(
+                                            imageFile!.readAsBytesSync());
+                                        imagepath =
+                                            imageFile!.path.split("/").last;
+                                        if (widget.type == 'category') {
+                                          updateCategoryImage(base64image,
+                                              imagepath, widget.id);
+                                        } else if (widget.type == 'news') {
+                                          updateNewsImage(base64image,
+                                              imagepath, widget.id);
+                                        }
+                                      },
+                                      child: const Icon(
+                                        Icons.done,
+                                        color: Colors.green,
+                                        size: 30.0,
+                                      ),
+                                    )
+                            ],
+                          ),
+                        ),
                 ],
               ),
               const SizedBox(
@@ -237,6 +254,10 @@ class _EditNewsState extends State<EditNews> {
                       updateNewsText(title.text, desc.text, widget.id);
                       showDoneSnackBar(context, "Updated successfully");
                       Get.offAll(() => const NavBar(typeId: 3));
+                    } else if (widget.type == 'food') {
+                      updateFoodPlanText(title.text, desc.text, widget.id);
+                      showDoneSnackBar(context, "Updated successfully");
+                      Get.offAll(() => const NavBar(typeId: 2));
                     }
                   }
                 },

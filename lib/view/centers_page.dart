@@ -73,6 +73,7 @@ class _CentersPageState extends State<CentersPage> {
                   return GestureDetector(
                     onTap: () {
                       Get.to(CenterDetailsPage(
+                        centerId: get.id,
                         name: get.name,
                         email: get.email,
                         phone: get.phone,
