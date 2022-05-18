@@ -111,125 +111,137 @@ class _CenterFoodPlanState extends State<CenterFoodPlan> {
                     color: AppColors.secondaryColor,
                   ),
                 )
-              : GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 2 / 2.85,
-                  ),
-                  itemCount: foodPlan.length,
-                  itemBuilder: (_, index) {
-                    GetFoodPlan get = foodPlan[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Get.to(MealDetailsCard(
-                          imagePath: WebConfig.baseUrl +
-                              WebConfig.foodImages +
-                              get.image,
-                          title: get.name,
-                          desc: get.description,
-                        ));
-                      },
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(16.0)),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    // offset: const Offset(3, 3),
-                                    blurRadius: 10,
+              : foodPlan.isEmpty
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "No results",
+                          style: TextStyle(color: Colors.grey),
+                        )
+                      ],
+                    )
+                  : GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        childAspectRatio: 2 / 2.85,
+                      ),
+                      itemCount: foodPlan.length,
+                      itemBuilder: (_, index) {
+                        GetFoodPlan get = foodPlan[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(MealDetailsCard(
+                              imagePath: WebConfig.baseUrl +
+                                  WebConfig.foodImages +
+                                  get.image,
+                              title: get.name,
+                              desc: get.description,
+                            ));
+                          },
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(16.0)),
+                                    boxShadow: <BoxShadow>[
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.3),
+                                        // offset: const Offset(3, 3),
+                                        blurRadius: 10,
+                                      ),
+                                    ],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(16.0)),
+                                    child: Column(
+                                      children: [
+                                        AspectRatio(
+                                          aspectRatio: 1,
+                                          child: Image.network(
+                                            WebConfig.baseUrl +
+                                                WebConfig.foodImages +
+                                                get.image,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Expanded(
+                                            child: Container(
+                                          width: width,
+                                          padding: const EdgeInsets.all(5),
+                                          color: Colors.white54,
+                                          child: Center(
+                                            child: Text(
+                                              get.name,
+                                              style: AppFonts.tajawal14BlueW600,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialogWidget(
+                                                title:
+                                                    "Are you sure to delete this food plan?",
+                                                onTapYes: () {
+                                                  deleteFoodPlan(get.id);
+                                                  setState(() {
+                                                    fetchFoodPlan()
+                                                        .then((list) {
+                                                      setState(() {
+                                                        foodPlan = list;
+                                                      });
+                                                    });
+                                                  });
+                                                  Get.back();
+                                                });
+                                          });
+                                    },
+                                    child: const IconButtonWidget(
+                                        color: Colors.red, icons: Icons.delete),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Get.to(EditNews(
+                                        title: get.name,
+                                        id: 1,
+                                        isName: true,
+                                        type: "food",
+                                        image: WebConfig.baseUrl +
+                                            WebConfig.centerImages +
+                                            get.image,
+                                        desc: get.description,
+                                        titleNews: get.name,
+                                      ));
+                                    },
+                                    child: const IconButtonWidget(
+                                        color: Colors.blue, icons: Icons.edit),
                                   ),
                                 ],
                               ),
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(16.0)),
-                                child: Column(
-                                  children: [
-                                    AspectRatio(
-                                      aspectRatio: 1,
-                                      child: Image.network(
-                                        WebConfig.baseUrl +
-                                            WebConfig.foodImages +
-                                            get.image,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Expanded(
-                                        child: Container(
-                                      width: width,
-                                      padding: const EdgeInsets.all(5),
-                                      color: Colors.white54,
-                                      child: Center(
-                                        child: Text(
-                                          get.name,
-                                          style: AppFonts.tajawal14BlueW600,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    )),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  showDialog<String>(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialogWidget(
-                                            title:
-                                                "Are you sure to delete this food plan?",
-                                            onTapYes: () {
-                                              deleteFoodPlan(get.id);
-                                              setState(() {
-                                                fetchFoodPlan().then((list) {
-                                                  setState(() {
-                                                    foodPlan = list;
-                                                  });
-                                                });
-                                              });
-                                              Get.back();
-                                            });
-                                      });
-                                },
-                                child: const IconButtonWidget(
-                                    color: Colors.red, icons: Icons.delete),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Get.to(EditNews(
-                                    title: get.name,
-                                    id: 1,
-                                    isName: true,
-                                    type: "food",
-                                    image: WebConfig.baseUrl +
-                                        WebConfig.centerImages +
-                                        get.image,
-                                    desc: get.description,
-                                    titleNews: get.name,
-                                  ));
-                                },
-                                child: const IconButtonWidget(
-                                    color: Colors.blue, icons: Icons.edit),
-                              ),
                             ],
                           ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                        );
+                      },
+                    ),
         ),
       ),
     );

@@ -130,144 +130,157 @@ class _AdminNewsState extends State<AdminNews> {
                       color: AppColors.secondaryColor,
                     ),
                   )
-                : ListView.builder(
-                    itemCount: advertisments.length,
-                    itemBuilder: (context, index) {
-                      GetAdvertisment get = advertisments[index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
-                                child: Stack(
-                                  children: <Widget>[
-                                    Column(
+                : n.isEmpty
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "No results",
+                            style: TextStyle(color: Colors.grey),
+                          )
+                        ],
+                      )
+                    : ListView.builder(
+                        itemCount: advertisments.length,
+                        itemBuilder: (context, index) {
+                          GetAdvertisment get = advertisments[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10.0)),
+                                    child: Stack(
                                       children: <Widget>[
-                                        AspectRatio(
-                                          aspectRatio: 2,
-                                          child: Image.network(
-                                            WebConfig.baseUrl +
-                                                WebConfig.advImages +
-                                                get.image,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(10.0),
-                                              bottomRight:
-                                                  Radius.circular(10.0),
-                                            ),
-                                            color: Color(0xffD5D8D9),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Expanded(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(10),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: <Widget>[
-                                                      Text(
-                                                        get.description,
-                                                        style: AppFonts
-                                                            .tajawal20BlueW600,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
+                                        Column(
+                                          children: <Widget>[
+                                            AspectRatio(
+                                              aspectRatio: 2,
+                                              child: Image.network(
+                                                WebConfig.baseUrl +
+                                                    WebConfig.advImages +
+                                                    get.image,
+                                                fit: BoxFit.cover,
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                            Container(
+                                              decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(10.0),
+                                                  bottomRight:
+                                                      Radius.circular(10.0),
+                                                ),
+                                                color: Color(0xffD5D8D9),
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: <Widget>[
+                                                          Text(
+                                                            get.description,
+                                                            style: AppFonts
+                                                                .tajawal20BlueW600,
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Column(
-                                  children: [
-                                    InkWell(
-                                        onTap: () {
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialogWidget(
-                                                    title:
-                                                        "Are you sure to delete it?",
-                                                    onTapYes: () {
-                                                      deleteNews(get.id);
-                                                      setState(() {
-                                                        fetchAdvertisment()
-                                                            .then((list) {
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Column(
+                                      children: [
+                                        InkWell(
+                                            onTap: () {
+                                              showDialog<String>(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialogWidget(
+                                                        title:
+                                                            "Are you sure to delete it?",
+                                                        onTapYes: () {
+                                                          deleteNews(get.id);
                                                           setState(() {
-                                                            advertisments =
-                                                                list;
+                                                            fetchAdvertisment()
+                                                                .then((list) {
+                                                              setState(() {
+                                                                advertisments =
+                                                                    list;
+                                                              });
+                                                            });
                                                           });
+                                                          Get.back();
                                                         });
-                                                      });
-                                                      Get.back();
-                                                    });
-                                              });
-                                        },
-                                        child: const IconButtonWidget(
-                                            color: Colors.red,
-                                            icons: Icons.delete)),
-                                    const SizedBox(
-                                      height: 10,
+                                                  });
+                                            },
+                                            child: const IconButtonWidget(
+                                                color: Colors.red,
+                                                icons: Icons.delete)),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        InkWell(
+                                            onTap: () {
+                                              Get.to(EditNews(
+                                                title: 'Edit News',
+                                                isName: true,
+                                                type: 'news',
+                                                image: WebConfig.baseUrl +
+                                                    WebConfig.advImages +
+                                                    get.image,
+                                                titleNews: get.title,
+                                                desc: get.description,
+                                                id: get.id,
+                                              ));
+                                            },
+                                            child: IconButtonWidget(
+                                                color: AppColors.primaryColor,
+                                                icons: Icons.edit)),
+                                      ],
                                     ),
-                                    InkWell(
-                                        onTap: () {
-                                          Get.to(EditNews(
-                                            title: 'Edit News',
-                                            isName: true,
-                                            type: 'news',
-                                            image: WebConfig.baseUrl +
-                                                WebConfig.advImages +
-                                                get.image,
-                                            titleNews: get.title,
-                                            desc: get.description,
-                                            id: get.id,
-                                          ));
-                                        },
-                                        child: IconButtonWidget(
-                                            color: AppColors.primaryColor,
-                                            icons: Icons.edit)),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                          );
+                        },
+                      ),
           ),
         ],
       ),

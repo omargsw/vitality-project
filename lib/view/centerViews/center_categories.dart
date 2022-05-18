@@ -77,90 +77,104 @@ class _CenterCategoriesState extends State<CenterCategories> {
                       color: AppColors.secondaryColor,
                     ),
                   )
-                : ListView.builder(
-                    itemCount: category.length,
-                    itemBuilder: (context, index) {
-                      GetCaregories get = category[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Get.to(CenterFoodPlan(
-                            categoryId: get.id,
-                            title: get.name,
-                            imagePath: WebConfig.baseUrl +
-                                WebConfig.categoryImages +
-                                get.image,
-                          ));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 24, right: 24, top: 8, bottom: 16),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(16.0)),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.6),
-                                  offset: const Offset(4, 4),
-                                  blurRadius: 16,
+                : category.isEmpty
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "No results",
+                            style: TextStyle(color: Colors.grey),
+                          )
+                        ],
+                      )
+                    : ListView.builder(
+                        itemCount: category.length,
+                        itemBuilder: (context, index) {
+                          GetCaregories get = category[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(CenterFoodPlan(
+                                categoryId: get.id,
+                                title: get.name,
+                                imagePath: WebConfig.baseUrl +
+                                    WebConfig.categoryImages +
+                                    get.image,
+                              ));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 24, right: 24, top: 8, bottom: 16),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.primaryColor,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(16.0)),
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.6),
+                                      offset: const Offset(4, 4),
+                                      blurRadius: 16,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(16.0)),
-                              child: Stack(
-                                children: <Widget>[
-                                  Column(
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(16.0)),
+                                  child: Stack(
                                     children: <Widget>[
-                                      AspectRatio(
-                                        aspectRatio: 2,
-                                        child: Image.network(
-                                          WebConfig.baseUrl +
-                                              WebConfig.categoryImages +
-                                              get.image,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Container(
-                                        color: const Color(0xffB5E0F9),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 10, bottom: 10),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    Text(get.name,
-                                                        style: AppFonts
-                                                            .tajawal20BlueW600),
-                                                  ],
-                                                ),
-                                              ),
+                                      Column(
+                                        children: <Widget>[
+                                          AspectRatio(
+                                            aspectRatio: 2,
+                                            child: Image.network(
+                                              WebConfig.baseUrl +
+                                                  WebConfig.categoryImages +
+                                                  get.image,
+                                              fit: BoxFit.cover,
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          Container(
+                                            color: const Color(0xffB5E0F9),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 10,
+                                                            bottom: 10),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: <Widget>[
+                                                        Text(get.name,
+                                                            style: AppFonts
+                                                                .tajawal20BlueW600),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                          );
+                        },
+                      ),
           ),
         ],
       ),

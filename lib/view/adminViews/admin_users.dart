@@ -113,95 +113,106 @@ class _AdminUsersState extends State<AdminUsers>
               color: AppColors.secondaryColor,
             ),
           )
-        : ListView.builder(
-            itemCount: customers.length,
-            itemBuilder: (context, index) {
-              GetCusromerAccounts get = customers[index];
-              return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(10.0)),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.4),
-                          offset: const Offset(4, 4),
-                          blurRadius: 16,
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          ClipOval(
-                            child: Image.network(
-                              WebConfig.baseUrl +
-                                  WebConfig.customerImage +
-                                  get.image,
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
+        : customers.isEmpty
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "No results",
+                    style: TextStyle(color: Colors.grey),
+                  )
+                ],
+              )
+            : ListView.builder(
+                itemCount: customers.length,
+                itemBuilder: (context, index) {
+                  GetCusromerAccounts get = customers[index];
+                  return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10.0)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.4),
+                              offset: const Offset(4, 4),
+                              blurRadius: 16,
                             ),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(
-                                get.name,
-                                style: AppFonts.tajawal16GreenW600,
+                              const SizedBox(
+                                width: 8,
                               ),
-                              Text(
-                                get.email,
-                                style: AppFonts.tajawal14GreenW600,
+                              ClipOval(
+                                child: Image.network(
+                                  WebConfig.baseUrl +
+                                      WebConfig.customerImage +
+                                      get.image,
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                              Text(
-                                get.phone,
-                                style: AppFonts.tajawal14BlueW600,
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    get.name,
+                                    style: AppFonts.tajawal16GreenW600,
+                                  ),
+                                  Text(
+                                    get.email,
+                                    style: AppFonts.tajawal14GreenW600,
+                                  ),
+                                  Text(
+                                    get.phone,
+                                    style: AppFonts.tajawal14BlueW600,
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              InkWell(
+                                onTap: () {
+                                  showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialogWidget(
+                                            title:
+                                                "Are you sure to delete this account?",
+                                            onTapYes: () {
+                                              deleteCustomerUser(get.id);
+                                              setState(() {
+                                                fetchCusromerAccount()
+                                                    .then((list) {
+                                                  setState(() {
+                                                    customers = list;
+                                                  });
+                                                });
+                                              });
+                                              Get.back();
+                                            });
+                                      });
+                                },
+                                child: const IconButtonWidget(
+                                    color: Colors.red, icons: Icons.delete),
                               ),
                             ],
                           ),
-                          const Spacer(),
-                          InkWell(
-                            onTap: () {
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialogWidget(
-                                        title:
-                                            "Are you sure to delete this account?",
-                                        onTapYes: () {
-                                          deleteCustomerUser(get.id);
-                                          setState(() {
-                                            fetchCusromerAccount().then((list) {
-                                              setState(() {
-                                                customers = list;
-                                              });
-                                            });
-                                          });
-                                          Get.back();
-                                        });
-                                  });
-                            },
-                            child: const IconButtonWidget(
-                                color: Colors.red, icons: Icons.delete),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ));
-            },
-          );
+                        ),
+                      ));
+                },
+              );
   }
 
   _displayCenterAccount() {
@@ -221,81 +232,91 @@ class _AdminUsersState extends State<AdminUsers>
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: centers.length,
-            itemBuilder: (context, index) {
-              GetCenter get = centers[index];
-              return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.4),
-                            offset: const Offset(4, 4),
-                            blurRadius: 16,
-                          ),
-                        ],
-                      ),
-                      child: ListTile(
-                        leading: ClipOval(
-                          child: Image.network(
-                            WebConfig.baseUrl +
-                                WebConfig.centerImages +
-                                get.image,
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              get.name,
-                              style: AppFonts.tajawal16GreenW600,
+          child: centers.isEmpty
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      "No results",
+                      style: TextStyle(color: Colors.grey),
+                    )
+                  ],
+                )
+              : ListView.builder(
+                  itemCount: centers.length,
+                  itemBuilder: (context, index) {
+                    GetCenter get = centers[index];
+                    return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10.0)),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.4),
+                                  offset: const Offset(4, 4),
+                                  blurRadius: 16,
+                                ),
+                              ],
                             ),
-                            Text(
-                              get.email,
-                              style: AppFonts.tajawal14GreenW600,
-                            ),
-                            Text(
-                              get.phone,
-                              style: AppFonts.tajawal14BlueW600,
-                            ),
-                          ],
-                        ),
-                        trailing: InkWell(
-                          onTap: () {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialogWidget(
-                                      title:
-                                          "Are you sure to delete this account?",
-                                      onTapYes: () {
-                                        deleteCenterUser(get.id);
-                                        setState(() {
-                                          fetchCenter().then((list) {
-                                            setState(() {
-                                              centers = list;
+                            child: ListTile(
+                              leading: ClipOval(
+                                child: Image.network(
+                                  WebConfig.baseUrl +
+                                      WebConfig.centerImages +
+                                      get.image,
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    get.name,
+                                    style: AppFonts.tajawal16GreenW600,
+                                  ),
+                                  Text(
+                                    get.email,
+                                    style: AppFonts.tajawal14GreenW600,
+                                  ),
+                                  Text(
+                                    get.phone,
+                                    style: AppFonts.tajawal14BlueW600,
+                                  ),
+                                ],
+                              ),
+                              trailing: InkWell(
+                                onTap: () {
+                                  showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialogWidget(
+                                            title:
+                                                "Are you sure to delete this account?",
+                                            onTapYes: () {
+                                              deleteCenterUser(get.id);
+                                              setState(() {
+                                                fetchCenter().then((list) {
+                                                  setState(() {
+                                                    centers = list;
+                                                  });
+                                                });
+                                              });
+                                              Get.back();
                                             });
-                                          });
-                                        });
-                                        Get.back();
                                       });
-                                });
-                          },
-                          child: const IconButtonWidget(
-                              color: Colors.red, icons: Icons.delete),
-                        ),
-                      )));
-            },
-          ),
+                                },
+                                child: const IconButtonWidget(
+                                    color: Colors.red, icons: Icons.delete),
+                              ),
+                            )));
+                  },
+                ),
         ),
       ],
     );

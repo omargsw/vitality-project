@@ -120,237 +120,260 @@ class _ReservationsDepartmentState extends State<ReservationsDepartment> {
                       color: AppColors.secondaryColor,
                     ),
                   )
-                : ListView.builder(
-                    itemCount: appointments.length,
-                    itemBuilder: (context, index) {
-                      GetAppointments get = appointments[index];
-                      return Column(
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: width * 0.95,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0)),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.4),
-                                  offset: const Offset(4, 4),
-                                  blurRadius: 16,
+                : appointments.isEmpty
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "No results",
+                            style: TextStyle(color: Colors.grey),
+                          )
+                        ],
+                      )
+                    : ListView.builder(
+                        itemCount: appointments.length,
+                        itemBuilder: (context, index) {
+                          GetAppointments get = appointments[index];
+                          return Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                width: width * 0.95,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0)),
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.4),
+                                      offset: const Offset(4, 4),
+                                      blurRadius: 16,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Row(
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            "Name :  ",
-                                            style: AppFonts.tajawal16GreenW600,
+                                          Row(
+                                            children: [
+                                              Text(
+                                                "Name :  ",
+                                                style:
+                                                    AppFonts.tajawal16GreenW600,
+                                              ),
+                                              Text(
+                                                get.customerName,
+                                                style:
+                                                    AppFonts.tajawal14BlackW400,
+                                              ),
+                                            ],
                                           ),
-                                          Text(
-                                            get.customerName,
-                                            style: AppFonts.tajawal14BlackW400,
+                                          Row(
+                                            children: [
+                                              Text(
+                                                "Phone :  ",
+                                                style:
+                                                    AppFonts.tajawal16GreenW600,
+                                              ),
+                                              Text(
+                                                get.customerPhone,
+                                                style:
+                                                    AppFonts.tajawal14BlackW400,
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Phone :  ",
-                                            style: AppFonts.tajawal16GreenW600,
-                                          ),
-                                          Text(
-                                            get.customerPhone,
-                                            style: AppFonts.tajawal14BlackW400,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  InkWell(
-                                      onTap: () {
-                                        showDialog<String>(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                shape:
-                                                    const RoundedRectangleBorder(
+                                      const Spacer(),
+                                      InkWell(
+                                          onTap: () {
+                                            showDialog<String>(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    shape: const RoundedRectangleBorder(
                                                         borderRadius:
                                                             BorderRadius.all(
                                                                 Radius.circular(
                                                                     20.0))),
-                                                backgroundColor: Colors.white,
-                                                content: SizedBox(
-                                                  height: 200,
-                                                  width: width,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .fromLTRB(
-                                                                10, 0, 10, 20),
-                                                        child: Center(
-                                                          child: Text(
-                                                              "Are you sure to accept this appointment?",
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              style: TextStyle(
-                                                                  color: AppColors
-                                                                      .primaryColor)),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                horizontal: 10),
-                                                        child: Text(
-                                                            "Enter the fees here",
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: AppFonts
-                                                                .tajawal14BlackW400),
-                                                      ),
-                                                      Form(
-                                                        key: form,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  vertical: 10),
-                                                          child:
-                                                              TextFieldWidget(
-                                                            hintText:
-                                                                "Enter the fees..",
-                                                            prefixIcon:
-                                                                const Icon(
-                                                              Icons
-                                                                  .attach_money_outlined,
-                                                              color:
-                                                                  Colors.black,
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    content: SizedBox(
+                                                      height: 200,
+                                                      width: width,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    10,
+                                                                    0,
+                                                                    10,
+                                                                    20),
+                                                            child: Center(
+                                                              child: Text(
+                                                                  "Are you sure to accept this appointment?",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: TextStyle(
+                                                                      color: AppColors
+                                                                          .primaryColor)),
                                                             ),
-                                                            controller: fees,
-                                                            suffixIconButton:
-                                                                null,
-                                                            ob: false,
-                                                            type: "name",
-                                                            inputType:
-                                                                TextInputType
-                                                                    .phone,
                                                           ),
-                                                        ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        10),
+                                                            child: Text(
+                                                                "Enter the fees here",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style: AppFonts
+                                                                    .tajawal14BlackW400),
+                                                          ),
+                                                          Form(
+                                                            key: form,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .symmetric(
+                                                                      vertical:
+                                                                          10),
+                                                              child:
+                                                                  TextFieldWidget(
+                                                                hintText:
+                                                                    "Enter the fees..",
+                                                                prefixIcon:
+                                                                    const Icon(
+                                                                  Icons
+                                                                      .attach_money_outlined,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                                controller:
+                                                                    fees,
+                                                                suffixIconButton:
+                                                                    null,
+                                                                ob: false,
+                                                                type: "name",
+                                                                inputType:
+                                                                    TextInputType
+                                                                        .phone,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Get.back();
+                                                        },
+                                                        child: Text('Cancel',
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .secondaryColor,
+                                                            )),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          if (form.currentState!
+                                                              .validate()) {
+                                                            centerAccpetAppointment(
+                                                                get.id);
+                                                            updateFees(get.id,
+                                                                fees.text);
+                                                            setState(() {
+                                                              getAppointments()
+                                                                  .then((list) {
+                                                                setState(() {
+                                                                  appointments =
+                                                                      list;
+                                                                });
+                                                              });
+                                                            });
+                                                            Get.back();
+                                                          }
+                                                        },
+                                                        child: Text('Accept',
+                                                            style: TextStyle(
+                                                              color: AppColors
+                                                                  .secondaryColor,
+                                                            )),
                                                       ),
                                                     ],
-                                                  ),
-                                                ),
-                                                actions: <Widget>[
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Get.back();
-                                                    },
-                                                    child: Text('Cancel',
-                                                        style: TextStyle(
-                                                          color: AppColors
-                                                              .secondaryColor,
-                                                        )),
-                                                  ),
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      if (form.currentState!
-                                                          .validate()) {
-                                                        centerAccpetAppointment(
-                                                            get.id);
-                                                        updateFees(
-                                                            get.id, fees.text);
-                                                        setState(() {
-                                                          getAppointments()
-                                                              .then((list) {
-                                                            setState(() {
-                                                              appointments =
-                                                                  list;
-                                                            });
-                                                          });
-                                                        });
-                                                        Get.back();
-                                                      }
-                                                    },
-                                                    child: Text('Accept',
-                                                        style: TextStyle(
-                                                          color: AppColors
-                                                              .secondaryColor,
-                                                        )),
-                                                  ),
-                                                ],
-                                              );
-                                            });
-                                      },
-                                      child: const IconButtonWidget(
-                                          color: Colors.green,
-                                          icons: Icons.done)),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      showDialog<String>(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialogWidget(
-                                              title:
-                                                  "Are you sure to reject the reservation?",
-                                              onTapYes: () {
-                                                centerRejectAppointment(get.id);
-                                                setState(() {
-                                                  getAppointments()
-                                                      .then((list) {
-                                                    setState(() {
-                                                      appointments = list;
-                                                    });
-                                                  });
+                                                  );
                                                 });
-                                                Get.back();
-                                              },
-                                            );
-                                          });
-                                    },
-                                    child: const IconButtonWidget(
-                                        color: Colors.red,
-                                        icons: Icons.cancel_outlined),
+                                          },
+                                          child: const IconButtonWidget(
+                                              color: Colors.green,
+                                              icons: Icons.done)),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          showDialog<String>(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialogWidget(
+                                                  title:
+                                                      "Are you sure to reject the reservation?",
+                                                  onTapYes: () {
+                                                    centerRejectAppointment(
+                                                        get.id);
+                                                    setState(() {
+                                                      getAppointments()
+                                                          .then((list) {
+                                                        setState(() {
+                                                          appointments = list;
+                                                        });
+                                                      });
+                                                    });
+                                                    Get.back();
+                                                  },
+                                                );
+                                              });
+                                        },
+                                        child: const IconButtonWidget(
+                                            color: Colors.red,
+                                            icons: Icons.cancel_outlined),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      );
-                    },
-                  ),
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      ),
           ),
         ],
       ),

@@ -204,28 +204,38 @@ class _HomePageState extends State<HomePage> {
                         color: AppColors.secondaryColor,
                       ),
                     )
-                  : ListView.builder(
-                      itemCount: category.length,
-                      itemBuilder: (context, index) {
-                        GetCaregories get = category[index];
-                        return GestureDetector(
-                            onTap: () {
-                              Get.to(MealsDetails(
-                                title: get.name,
-                                imagePath: WebConfig.baseUrl +
-                                    WebConfig.categoryImages +
-                                    get.image,
-                                categoryId: get.id,
-                              ));
-                            },
-                            child: MealsCard(
-                              title: get.name,
-                              imagePath: WebConfig.baseUrl +
-                                  WebConfig.categoryImages +
-                                  get.image,
-                            ));
-                      },
-                    ),
+                  : advertisments.isEmpty
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              "No results",
+                              style: TextStyle(color: Colors.grey),
+                            )
+                          ],
+                        )
+                      : ListView.builder(
+                          itemCount: category.length,
+                          itemBuilder: (context, index) {
+                            GetCaregories get = category[index];
+                            return GestureDetector(
+                                onTap: () {
+                                  Get.to(MealsDetails(
+                                    title: get.name,
+                                    imagePath: WebConfig.baseUrl +
+                                        WebConfig.categoryImages +
+                                        get.image,
+                                    categoryId: get.id,
+                                  ));
+                                },
+                                child: MealsCard(
+                                  title: get.name,
+                                  imagePath: WebConfig.baseUrl +
+                                      WebConfig.categoryImages +
+                                      get.image,
+                                ));
+                          },
+                        ),
             ),
           ],
         ),
