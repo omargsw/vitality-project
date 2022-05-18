@@ -130,7 +130,7 @@ class _AdminNewsState extends State<AdminNews> {
                       color: AppColors.secondaryColor,
                     ),
                   )
-                : n.isEmpty
+                : advertisments.isEmpty
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [

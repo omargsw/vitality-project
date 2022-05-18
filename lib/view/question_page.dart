@@ -712,7 +712,7 @@ class _QuestionPageState extends State<QuestionPage> {
                           showErrorSnackBar(
                               context, "You have to answer all the questions");
                         } else {
-                          Get.to(const NavBar(typeId: 1));
+                          Get.offAll(const NavBar(typeId: 1));
                           showAlertDialog(context);
                         }
                       }

@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
         sharedPreferences.setString('email', json['user']['email']);
         sharedPreferences.setString('phone', json['user']['phone']);
         sharedPreferences.setString('image', json['user']['image']);
-        Get.to(NavBar(typeId: widget.typeId));
+        Get.offAll(NavBar(typeId: widget.typeId));
       }
       return true;
     } catch (e) {
@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
         sharedPreferences.setString('email', json['user']['email']);
         sharedPreferences.setString('phone', json['user']['phone']);
         sharedPreferences.setString('image', json['user']['image']);
-        Get.to(NavBar(typeId: widget.typeId));
+        Get.offAll(NavBar(typeId: widget.typeId));
       }
       return true;
     } catch (e) {
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
         sharedPreferences.setInt('userID', json['user']['id']);
         sharedPreferences.setString('name', json['user']['name']);
         sharedPreferences.setString('email', json['user']['email']);
-        Get.to(NavBar(typeId: widget.typeId));
+        Get.offAll(NavBar(typeId: widget.typeId));
       }
       return true;
     } catch (e) {
