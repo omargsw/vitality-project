@@ -460,11 +460,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     if (typeId == 1) {
                                       if (pass.text == pass2.text) {
                                         updateCustomerAccount(
-                                            userId,
-                                            email.text,
-                                            name.text,
-                                            phone,
-                                            pass2.text);
+                                          userId,
+                                          email.text,
+                                          name.text,
+                                          phone.text,
+                                          pass2.text,
+                                        );
                                         showDoneSnackBar(
                                             context, "Updated Successfully");
                                       } else {
@@ -473,8 +474,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       }
                                     } else {
                                       if (pass.text == pass2.text) {
-                                        updateCenterAccount(userId, email.text,
-                                            name.text, phone, "", pass2.text);
+                                        updateCenterAccount(
+                                            userId,
+                                            email.text,
+                                            name.text,
+                                            phone.text,
+                                            desc.text,
+                                            pass2.text);
                                         showDoneSnackBar(
                                             context, "Updated Successfully");
                                       } else {

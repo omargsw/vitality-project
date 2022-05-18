@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vitality/components/alert_dialog.dart';
 import 'package:vitality/components/color.dart';
 import 'package:vitality/components/constant.dart';
@@ -222,7 +223,7 @@ class _CenterDetailsPageState extends State<CenterDetailsPage> {
                                 },
                                 items: dates.map((date) {
                                   return DropdownMenuItem(
-                                      value: date.id.toString(),
+                                      value: date.dateTime.toString(),
                                       child: Text(
                                         date.dateTime,
                                         style: AppFonts.tajawal14BlackW400,
@@ -235,23 +236,24 @@ class _CenterDetailsPageState extends State<CenterDetailsPage> {
                     ),
                     InkWell(
                         onTap: () {
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialogWidget(
-                                    title: "Are you sure about booking it?",
-                                    onTapYes: () {
-                                      if (selecteditem != null) {
+                          if (selecteditem != null) {
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialogWidget(
+                                      title: "Are you sure about booking it?",
+                                      onTapYes: () {
                                         insertApointment(userId,
                                             widget.centerId, selecteditem);
                                         showDoneSnackBar(
                                             context, "Booked successfully");
-                                      } else {
-                                        showErrorSnackBar(context,
-                                            "You must select a date time");
-                                      }
-                                    });
-                              });
+                                        Get.back();
+                                      });
+                                });
+                          } else {
+                            showErrorSnackBar(
+                                context, "You must select a date time");
+                          }
                         },
                         child: PrimaryButton(
                             title: "Appointment Booking",

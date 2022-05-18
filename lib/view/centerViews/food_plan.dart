@@ -123,7 +123,7 @@ class _CenterFoodPlanState extends State<CenterFoodPlan> {
                       onTap: () {
                         Get.to(MealDetailsCard(
                           imagePath: WebConfig.baseUrl +
-                              WebConfig.centerImages +
+                              WebConfig.foodImages +
                               get.image,
                           title: get.name,
                           desc: get.description,
@@ -154,7 +154,7 @@ class _CenterFoodPlanState extends State<CenterFoodPlan> {
                                       aspectRatio: 1,
                                       child: Image.network(
                                         WebConfig.baseUrl +
-                                            WebConfig.centerImages +
+                                            WebConfig.foodImages +
                                             get.image,
                                         fit: BoxFit.cover,
                                       ),

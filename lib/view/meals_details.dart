@@ -79,7 +79,7 @@ class _MealsDetailsState extends State<MealsDetails> {
                 onTap: () {
                   Get.to(MealDetailsCard(
                     imagePath:
-                        WebConfig.baseUrl + WebConfig.centerImages + get.image,
+                        WebConfig.baseUrl + WebConfig.foodImages + get.image,
                     title: get.name,
                     desc: get.description,
                   ));
@@ -106,7 +106,9 @@ class _MealsDetailsState extends State<MealsDetails> {
                           AspectRatio(
                             aspectRatio: 1,
                             child: Image.network(
-                              widget.imagePath!,
+                              WebConfig.baseUrl +
+                                  WebConfig.foodImages +
+                                  get.image,
                               fit: BoxFit.cover,
                             ),
                           ),

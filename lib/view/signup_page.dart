@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:vitality/components/app_bar_login.dart';
 import 'package:vitality/components/color.dart';
@@ -53,12 +54,6 @@ class _SignUpPageState extends State<SignUpPage> {
     '1 Year     99 JOD',
   ];
 
-  var month = [
-    1,
-    2,
-    3,
-  ];
-
   Future<bool> userSignUp(var email, var pass, var phone, var name) async {
     String url = WebConfig.baseUrl + WebConfig.customerSignUp;
     final response = await http.post(Uri.parse(url), body: {
@@ -71,10 +66,16 @@ class _SignUpPageState extends State<SignUpPage> {
     if (json['error']) {
       showErrorSnackBar(context, "User already registered");
     } else {
-      // insertcustomerSubscription(customerid, fromDate, endDate);
-      Get.to(const LoginScreen(
-        typeId: 1,
-      ));
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.setInt('userID', json['user']['id']);
+      sharedPreferences.setString('name', json['user']['name']);
+      sharedPreferences.setString('email', json['user']['email']);
+      sharedPreferences.setString('phone', json['user']['phone']);
+      sharedPreferences.setString('image', json['user']['image']);
+      insertcustomerSubscription(
+          sharedPreferences.getInt('userID'), fromDate, endDate);
+      Get.to(const QuestionPage());
     }
     return true;
   }
@@ -303,7 +304,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           icon: iconpass2,
                         ),
                         ob: ob2,
-                        type: "pass",
+                        type: "name",
                         inputType: TextInputType.visiblePassword,
                       ),
                       const SizedBox(
@@ -313,8 +314,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         onTap: () {
                           if (form.currentState!.validate()) {
                             if (selecteditem != null) {
-                              userSignUp(email.text, pass2.text, phone.text,
-                                  name.text);
+                              if (pass.text == pass2.text) {
+                                userSignUp(email.text, pass2.text, phone.text,
+                                    name.text);
+                              } else {
+                                showErrorSnackBar(
+                                    context, "Password doesn't match!");
+                              }
                             } else {
                               showErrorSnackBar(
                                   context, "You must select the subscription");

@@ -9,7 +9,8 @@ class TextFieldWidget extends StatefulWidget {
   final TextEditingController? controller;
   final bool ob;
   final TextInputType? inputType;
-  const TextFieldWidget({Key? key,
+  const TextFieldWidget({
+    Key? key,
     required this.hintText,
     required this.prefixIcon,
     required this.controller,
@@ -30,51 +31,50 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          boxShadow:  [
+          boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
-              blurRadius: 20,
-              offset: Offset(1, 2)
-          )
-          ]
-      ),
+                color: Colors.grey.withOpacity(0.4),
+                blurRadius: 20,
+                offset: Offset(1, 2))
+          ]),
       child: Container(
         padding: const EdgeInsets.all(10),
         child: TextFormField(
           keyboardType: widget.inputType,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(10),
-            //hintText: Text("Email"),
-            labelText: widget.hintText,
-            labelStyle: AppFonts.tajawal14BlackW400,
-            fillColor: Colors.white,
-            focusColor: Colors.white,
-            filled: true,
-            suffixIcon: widget.suffixIconButton,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide.none,
-            ),
-            prefixIcon: widget.prefixIcon
-          ),
-          validator: (value){
-            if(value!.isEmpty) {
+              contentPadding: const EdgeInsets.all(10),
+              //hintText: Text("Email"),
+              labelText: widget.hintText,
+              labelStyle: AppFonts.tajawal14BlackW400,
+              fillColor: Colors.white,
+              focusColor: Colors.white,
+              filled: true,
+              suffixIcon: widget.suffixIconButton,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: BorderSide.none,
+              ),
+              prefixIcon: widget.prefixIcon),
+          validator: (value) {
+            if (value!.isEmpty) {
               return "required";
-            }else if(widget.type == "email"){
-              if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+            } else if (widget.type == "email") {
+              if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                  .hasMatch(value)) {
                 return "enter the currected email";
               }
-            }else if(widget.type == "phone"){
-              if(value.length != 10){
+            } else if (widget.type == "phone") {
+              if (value.length != 10) {
                 return "Phone number must be 10 numbers";
               }
-            }
-            else if(widget.type == "pass"){
-              if(value.length <= 6){
-                return "Password must be greater than 6 characters";
+            } else if (widget.type == "pass") {
+              if (!RegExp(
+                      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,15}$')
+                  .hasMatch(value)) {
+                return "The password must contain : \n *More than 8 and less than 15 characters \n *Upper case \n *lowercase \n *Numeric Number \n *Symbols (! @ # \$ & * ~)";
               }
             }
-            return null ;
+            return null;
           },
           obscureText: widget.ob,
           controller: widget.controller,

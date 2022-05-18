@@ -22,8 +22,9 @@ class _ReservationsListState extends State<ReservationsList> {
   Future getAppointments() async {
     isLoading = true;
     try {
-      String url =
-          WebConfig.baseUrl + WebConfig.centerViewAppoimtments + "?id=$userId";
+      String url = WebConfig.baseUrl +
+          WebConfig.customerViewAppointments +
+          "?id=$userId";
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         final List<GetAppointments> list =

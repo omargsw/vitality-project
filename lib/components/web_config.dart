@@ -1,5 +1,5 @@
 class WebConfig {
-  static String baseUrl = 'http://45.76.128.17/vitality';
+  static String baseUrl = 'http://192.168.1.7/vitality2';
 
   ///Customer
   static String customerSignUp = '/CustomerSignUp.php';
@@ -13,6 +13,7 @@ class WebConfig {
   static String customerAddApointment = '/CustomerAddApointment.php';
   static String customerGetDate = '/CustomerGetDate.php';
   static String customerSubscription = '/CustomerSubscription.php';
+  static String customerViewAppointments = '/CustomerViewAppointments.php';
 
   ///Adimn
   static String adminLogin = '/AdminLogin.php';
@@ -51,4 +52,5 @@ class WebConfig {
   static String advImages = '/AdvImages/';
   static String centerImages = '/CenterImages/';
   static String customerImage = '/CustomerImage/';
+  static String foodImages = '/FoodImages/';
 }

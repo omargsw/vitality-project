@@ -177,7 +177,7 @@ class _AdminReservationsState extends State<AdminReservations> {
                                             style: AppFonts.tajawal14BlueW600,
                                           ),
                                           Text(
-                                            get.time + " houre",
+                                            get.time,
                                             style: AppFonts.tajawal14BlackW400,
                                           ),
                                         ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:vitality/components/color.dart';
+import 'package:vitality/components/constant.dart';
 import 'package:vitality/components/fonts.dart';
 import 'package:vitality/components/web_config.dart';
 import 'package:vitality/main.dart';
@@ -32,12 +33,6 @@ class _NavBarState extends State<NavBar> {
   int _currentIndex = 0;
   int _currentIndexCenter = 0;
   int _currentIndexAdmin = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    print(accountImage);
-  }
 
   @override
   Widget build(BuildContext context) {

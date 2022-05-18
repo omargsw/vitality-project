@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.93,
+              height: MediaQuery.of(context).size.height * 0.5,
               child: isLoading
                   ? Center(
                       child: CircularProgressIndicator(
@@ -205,7 +205,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     )
                   : ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: category.length,
                       itemBuilder: (context, index) {
                         GetCaregories get = category[index];

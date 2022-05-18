@@ -205,75 +205,99 @@ class _AdminUsersState extends State<AdminUsers>
   }
 
   _displayCenterAccount() {
-    return ListView.builder(
-      itemCount: centers.length,
-      itemBuilder: (context, index) {
-        GetCenter get = centers[index];
-        return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.4),
-                      offset: const Offset(4, 4),
-                      blurRadius: 16,
-                    ),
-                  ],
-                ),
-                child: ListTile(
-                  leading: ClipOval(
-                    child: Image.network(
-                      WebConfig.baseUrl + WebConfig.centerImages + get.image,
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        get.name,
-                        style: AppFonts.tajawal16GreenW600,
+    return Column(
+      children: [
+        TextButton.icon(
+          onPressed: () {
+            Get.to(const AddCenterAccount());
+          },
+          icon: Icon(
+            Icons.add,
+            color: AppColors.secondaryColor,
+          ),
+          label: Text(
+            'Add Center Account',
+            style: TextStyle(color: AppColors.secondaryColor, fontSize: 15),
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: centers.length,
+            itemBuilder: (context, index) {
+              GetCenter get = centers[index];
+              return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.4),
+                            offset: const Offset(4, 4),
+                            blurRadius: 16,
+                          ),
+                        ],
                       ),
-                      Text(
-                        get.email,
-                        style: AppFonts.tajawal14GreenW600,
-                      ),
-                      Text(
-                        get.phone,
-                        style: AppFonts.tajawal14BlueW600,
-                      ),
-                    ],
-                  ),
-                  trailing: InkWell(
-                    onTap: () {
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialogWidget(
-                                title: "Are you sure to delete this account?",
-                                onTapYes: () {
-                                  deleteCenterUser(get.id);
-                                  setState(() {
-                                    fetchCenter().then((list) {
-                                      setState(() {
-                                        centers = list;
+                      child: ListTile(
+                        leading: ClipOval(
+                          child: Image.network(
+                            WebConfig.baseUrl +
+                                WebConfig.centerImages +
+                                get.image,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              get.name,
+                              style: AppFonts.tajawal16GreenW600,
+                            ),
+                            Text(
+                              get.email,
+                              style: AppFonts.tajawal14GreenW600,
+                            ),
+                            Text(
+                              get.phone,
+                              style: AppFonts.tajawal14BlueW600,
+                            ),
+                          ],
+                        ),
+                        trailing: InkWell(
+                          onTap: () {
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialogWidget(
+                                      title:
+                                          "Are you sure to delete this account?",
+                                      onTapYes: () {
+                                        deleteCenterUser(get.id);
+                                        setState(() {
+                                          fetchCenter().then((list) {
+                                            setState(() {
+                                              centers = list;
+                                            });
+                                          });
+                                        });
+                                        Get.back();
                                       });
-                                    });
-                                  });
-                                  Get.back();
                                 });
-                          });
-                    },
-                    child: const IconButtonWidget(
-                        color: Colors.red, icons: Icons.delete),
-                  ),
-                )));
-      },
+                          },
+                          child: const IconButtonWidget(
+                              color: Colors.red, icons: Icons.delete),
+                        ),
+                      )));
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -326,13 +350,6 @@ class _AdminUsersState extends State<AdminUsers>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: AppColors.secondaryColor,
-        foregroundColor: Colors.white,
-        onPressed: () => Get.to(const AddCenterAccount()),
-        icon: const Icon(Icons.add),
-        label: const Text('Add Center Account'),
-      ),
       body: Stack(
         children: [
           SizedBox(

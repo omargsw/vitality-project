@@ -89,7 +89,6 @@ class _CentersPageState extends State<CentersPage> {
                           boxShadow: <BoxShadow>[
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.3),
-                              // offset: const Offset(3, 3),
                               blurRadius: 10,
                             ),
                           ],
