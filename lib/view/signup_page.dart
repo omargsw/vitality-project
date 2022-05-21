@@ -11,6 +11,7 @@ import 'package:vitality/components/constant.dart';
 import 'package:vitality/components/fonts.dart';
 import 'package:vitality/components/text_field.dart';
 import 'package:vitality/components/web_config.dart';
+import 'package:vitality/view/credit_card.dart';
 import 'package:vitality/view/login_page.dart';
 import 'package:vitality/view/question_page.dart';
 import 'package:vitality/widgets/primary_button.dart';
@@ -75,7 +76,7 @@ class _SignUpPageState extends State<SignUpPage> {
       sharedPreferences.setString('image', json['user']['image']);
       insertcustomerSubscription(
           sharedPreferences.getInt('userID'), fromDate, endDate);
-      Get.to(const QuestionPage());
+      Get.to(const CreditCardPage());
     }
     return true;
   }
