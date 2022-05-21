@@ -264,7 +264,8 @@ class _ReservationsDepartmentState extends State<ReservationsDepartment> {
                                                                           10),
                                                               child:
                                                                   TextFieldWidget(
-                                                                hintText:
+                                                                hint: "",
+                                                                text:
                                                                     "Enter the fees..",
                                                                 prefixIcon:
                                                                     const Icon(
@@ -332,37 +333,37 @@ class _ReservationsDepartmentState extends State<ReservationsDepartment> {
                                           child: const IconButtonWidget(
                                               color: Colors.green,
                                               icons: Icons.done)),
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          showDialog<String>(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialogWidget(
-                                                  title:
-                                                      "Are you sure to reject the reservation?",
-                                                  onTapYes: () {
-                                                    centerRejectAppointment(
-                                                        get.id);
-                                                    setState(() {
-                                                      getAppointments()
-                                                          .then((list) {
-                                                        setState(() {
-                                                          appointments = list;
-                                                        });
-                                                      });
-                                                    });
-                                                    Get.back();
-                                                  },
-                                                );
-                                              });
-                                        },
-                                        child: const IconButtonWidget(
-                                            color: Colors.red,
-                                            icons: Icons.cancel_outlined),
-                                      ),
+                                      // const SizedBox(
+                                      //   width: 8,
+                                      // ),
+                                      // InkWell(
+                                      //   onTap: () {
+                                      //     showDialog<String>(
+                                      //         context: context,
+                                      //         builder: (BuildContext context) {
+                                      //           return AlertDialogWidget(
+                                      //             title:
+                                      //                 "Are you sure to reject the reservation?",
+                                      //             onTapYes: () {
+                                      //               centerRejectAppointment(
+                                      //                   get.id);
+                                      //               setState(() {
+                                      //                 getAppointments()
+                                      //                     .then((list) {
+                                      //                   setState(() {
+                                      //                     appointments = list;
+                                      //                   });
+                                      //                 });
+                                      //               });
+                                      //               Get.back();
+                                      //             },
+                                      //           );
+                                      //         });
+                                      //   },
+                                      //   child: const IconButtonWidget(
+                                      //       color: Colors.red,
+                                      //       icons: Icons.cancel_outlined),
+                                      // ),
                                       const SizedBox(
                                         width: 10,
                                       ),

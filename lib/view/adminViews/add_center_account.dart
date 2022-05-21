@@ -214,7 +214,8 @@ class _AddCenterAccountState extends State<AddCenterAccount> {
                           child: Column(
                             children: [
                               TextFieldWidget(
-                                hintText: "Name..",
+                                hint: "",
+                                text: "Name",
                                 prefixIcon: const Icon(
                                   Icons.person,
                                   color: Colors.black,
@@ -229,7 +230,8 @@ class _AddCenterAccountState extends State<AddCenterAccount> {
                                 height: 10,
                               ),
                               TextFieldWidget(
-                                hintText: "Email..",
+                                hint: "example@example.com",
+                                text: "Email",
                                 prefixIcon: const Icon(
                                   Icons.email,
                                   color: Colors.black,
@@ -244,7 +246,8 @@ class _AddCenterAccountState extends State<AddCenterAccount> {
                                 height: 10,
                               ),
                               TextFieldWidget(
-                                hintText: "Phone number..",
+                                hint: "07xxxxxxxx",
+                                text: "Phone number",
                                 prefixIcon: const Icon(
                                   Icons.phone_android,
                                   color: Colors.black,
@@ -259,7 +262,8 @@ class _AddCenterAccountState extends State<AddCenterAccount> {
                                 height: 10,
                               ),
                               TextFieldWidget(
-                                hintText: "Location..",
+                                hint: "Amman - Jordan",
+                                text: "Location..",
                                 prefixIcon: const Icon(
                                   Icons.location_on,
                                   color: Colors.black,
@@ -274,7 +278,8 @@ class _AddCenterAccountState extends State<AddCenterAccount> {
                                 height: 10,
                               ),
                               TextFieldWidget(
-                                hintText: "Street Name..",
+                                hint: "zahran st",
+                                text: "Street Name..",
                                 prefixIcon: const Icon(
                                   Icons.location_city,
                                   color: Colors.black,
@@ -334,7 +339,8 @@ class _AddCenterAccountState extends State<AddCenterAccount> {
                                 height: 10,
                               ),
                               TextFieldWidget(
-                                hintText: "Password..",
+                                hint: "",
+                                text: "Password..",
                                 prefixIcon: const Icon(
                                   Icons.lock,
                                   color: Colors.black,
@@ -365,7 +371,8 @@ class _AddCenterAccountState extends State<AddCenterAccount> {
                                 height: 10,
                               ),
                               TextFieldWidget(
-                                hintText: "Confirm Password..",
+                                hint: "",
+                                text: "Confirm Password..",
                                 prefixIcon: const Icon(
                                   Icons.lock,
                                   color: Colors.black,

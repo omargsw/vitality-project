@@ -140,7 +140,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: Column(
                     children: <Widget>[
                       TextFieldWidget(
-                        hintText: "Name..",
+                        hint: "Enter you name",
+                        text: "Name",
                         prefixIcon: const Icon(
                           Icons.person,
                           color: Colors.black,
@@ -155,7 +156,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: 10,
                       ),
                       TextFieldWidget(
-                        hintText: "Email..",
+                        hint: "example@example.com",
+                        text: "Email",
                         prefixIcon: const Icon(
                           Icons.email,
                           color: Colors.black,
@@ -170,7 +172,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: 10,
                       ),
                       TextFieldWidget(
-                        hintText: "Phone number..",
+                        hint: "07xxxxxxxx",
+                        text: "Phone number",
                         prefixIcon: const Icon(
                           Icons.phone_android,
                           color: Colors.black,
@@ -251,7 +254,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: 10,
                       ),
                       TextFieldWidget(
-                        hintText: "Password..",
+                        hint: "",
+                        text: "Password",
                         prefixIcon: const Icon(
                           Icons.lock,
                           color: Colors.black,
@@ -281,7 +285,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: 10,
                       ),
                       TextFieldWidget(
-                        hintText: "Confirm Password..",
+                        hint: "",
+                        text: "Confirm Password",
                         prefixIcon: const Icon(
                           Icons.lock,
                           color: Colors.black,

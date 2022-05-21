@@ -175,7 +175,8 @@ class _AddnewsState extends State<Addnews> {
                   children: [
                     widget.isName!
                         ? TextFieldWidget(
-                            hintText: "Title",
+                            hint: "",
+                            text: "Title",
                             prefixIcon: null,
                             controller: title,
                             suffixIconButton: null,
@@ -188,7 +189,8 @@ class _AddnewsState extends State<Addnews> {
                       height: 10,
                     ),
                     TextFieldWidget(
-                      hintText: "Description",
+                      hint: "",
+                      text: "Description",
                       prefixIcon: null,
                       controller: desc,
                       suffixIconButton: null,

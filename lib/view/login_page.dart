@@ -170,7 +170,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: <Widget>[
                       TextFieldWidget(
-                          hintText: "Email..",
+                          hint: "",
+                          text: "Email..",
                           prefixIcon: const Icon(
                             Icons.email,
                             color: Colors.black,
@@ -184,7 +185,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 20,
                       ),
                       TextFieldWidget(
-                          hintText: "Password..",
+                          hint: "",
+                          text: "Password..",
                           prefixIcon: const Icon(
                             Icons.lock,
                             color: Colors.black,

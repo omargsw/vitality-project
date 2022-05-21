@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vitality/components/fonts.dart';
 
 class TextFieldWidget extends StatefulWidget {
-  final String? hintText;
+  final String? text;
+  final String? hint;
   final Icon? prefixIcon;
   final IconButton? suffixIconButton;
   final String? type;
@@ -11,13 +12,14 @@ class TextFieldWidget extends StatefulWidget {
   final TextInputType? inputType;
   const TextFieldWidget({
     Key? key,
-    required this.hintText,
+    required this.text,
     required this.prefixIcon,
     required this.controller,
     required this.suffixIconButton,
     required this.ob,
     required this.type,
     required this.inputType,
+    required this.hint,
   }) : super(key: key);
 
   @override
@@ -43,8 +45,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           keyboardType: widget.inputType,
           decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(10),
-              //hintText: Text("Email"),
-              labelText: widget.hintText,
+              hintText: widget.hint,
+              labelText: widget.text,
               labelStyle: AppFonts.tajawal14BlackW400,
               fillColor: Colors.white,
               focusColor: Colors.white,

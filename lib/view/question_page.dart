@@ -182,7 +182,8 @@ class _QuestionPageState extends State<QuestionPage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: TextFieldWidget(
-                    hintText: "Name of city..",
+                    hint: "amman",
+                    text: "Name of city..",
                     prefixIcon: const Icon(
                       Icons.location_city,
                       color: Colors.black,
@@ -464,7 +465,8 @@ class _QuestionPageState extends State<QuestionPage> {
                     ? Padding(
                         padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                         child: TextFieldWidget(
-                          hintText: "Why yes..",
+                          hint: "",
+                          text: "Why yes..",
                           prefixIcon: null,
                           controller: q2,
                           suffixIconButton: null,
@@ -485,7 +487,8 @@ class _QuestionPageState extends State<QuestionPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: TextFieldWidget(
-                    hintText: ".....",
+                    hint: "",
+                    text: ".....",
                     prefixIcon: null,
                     controller: q3,
                     suffixIconButton: null,
@@ -545,7 +548,8 @@ class _QuestionPageState extends State<QuestionPage> {
                     ? Padding(
                         padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                         child: TextFieldWidget(
-                          hintText: "Why yes..",
+                          hint: "",
+                          text: "Why yes..",
                           prefixIcon: null,
                           controller: q8,
                           suffixIconButton: null,
@@ -566,7 +570,8 @@ class _QuestionPageState extends State<QuestionPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: TextFieldWidget(
-                    hintText: ".....",
+                    hint: "",
+                    text: ".....",
                     prefixIcon: null,
                     controller: q4,
                     suffixIconButton: null,
@@ -646,7 +651,8 @@ class _QuestionPageState extends State<QuestionPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: TextFieldWidget(
-                    hintText: ".....",
+                    hint: "",
+                    text: ".....",
                     prefixIcon: null,
                     controller: q5,
                     suffixIconButton: null,
@@ -666,7 +672,8 @@ class _QuestionPageState extends State<QuestionPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: TextFieldWidget(
-                    hintText: ".....",
+                    hint: "",
+                    text: ".....",
                     prefixIcon: null,
                     controller: q6,
                     suffixIconButton: null,
@@ -686,7 +693,8 @@ class _QuestionPageState extends State<QuestionPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: TextFieldWidget(
-                    hintText: ".....",
+                    hint: "",
+                    text: ".....",
                     prefixIcon: null,
                     controller: q7,
                     suffixIconButton: null,

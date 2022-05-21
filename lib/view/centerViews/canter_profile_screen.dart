@@ -347,7 +347,8 @@ class _CenterProfileScreenState extends State<CenterProfileScreen> {
                                 height: 10,
                               ),
                               TextFieldWidget(
-                                hintText: "Email..",
+                                hint: "",
+                                text: "Email..",
                                 prefixIcon: const Icon(
                                   Icons.email,
                                   color: Colors.black,
@@ -362,7 +363,8 @@ class _CenterProfileScreenState extends State<CenterProfileScreen> {
                                 height: 10,
                               ),
                               TextFieldWidget(
-                                hintText: "Phone number..",
+                                hint: "",
+                                text: "Phone number..",
                                 prefixIcon: const Icon(
                                   Icons.phone_android,
                                   color: Colors.black,
@@ -377,7 +379,8 @@ class _CenterProfileScreenState extends State<CenterProfileScreen> {
                                 height: 10,
                               ),
                               TextFieldWidget(
-                                hintText: "Password..",
+                                hint: "",
+                                text: "Password..",
                                 prefixIcon: const Icon(
                                   Icons.lock,
                                   color: Colors.black,
@@ -408,7 +411,8 @@ class _CenterProfileScreenState extends State<CenterProfileScreen> {
                                 height: 10,
                               ),
                               TextFieldWidget(
-                                hintText: "Confirm Password..",
+                                hint: "",
+                                text: "Confirm Password..",
                                 prefixIcon: const Icon(
                                   Icons.lock,
                                   color: Colors.black,
